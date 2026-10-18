@@ -18,6 +18,7 @@ import {
   Lightbulb,
   ExternalLink,
   ArrowRight,
+  Cpu,
 } from "lucide-react";
 
 interface ArticleDetailPageProps {
@@ -93,14 +94,14 @@ export default async function ArticleDetailPage({ params }: ArticleDetailPagePro
       </header>
 
       {/* Featured Image with proper alt text and caption */}
-      <figure className="relative w-full h-64 sm:h-96 rounded-3xl overflow-hidden bg-gray-100 border border-brand-border shadow-card">
+      <figure className={`relative w-full h-64 sm:h-96 rounded-3xl overflow-hidden border border-brand-border shadow-card ${article.imageUrl.endsWith('.svg') ? 'bg-slate-950' : 'bg-gray-100'}`}>
         <Image
           src={article.imageUrl}
           alt={article.imageAlt}
           fill
           priority
           sizes="(max-width: 768px) 100vw, 800px"
-          className="object-cover"
+          className={article.imageUrl.endsWith('.svg') ? "object-contain p-2" : "object-cover"}
         />
         <figcaption className="absolute bottom-0 inset-x-0 bg-black/60 backdrop-blur-xs text-white text-[11px] p-2.5 text-center">
           {article.imageCaption}
@@ -125,6 +126,65 @@ export default async function ArticleDetailPage({ params }: ArticleDetailPagePro
           ))}
         </ul>
       </section>
+
+      {/* Hardware Components Gallery (Dedicated for FRESHGUARD AI Device & Sensors) */}
+      {article.hardwareGallery && article.hardwareGallery.length > 0 && (
+        <section aria-labelledby="hardware-gallery-heading" className="space-y-4 pt-2">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-xl bg-brand-pale text-brand-dark flex items-center justify-center">
+              <Cpu className="w-4 h-4" aria-hidden="true" />
+            </div>
+            <div>
+              <h2 id="hardware-gallery-heading" className="text-lg sm:text-xl font-bold text-brand-text">
+                Visualisasi Komponen Perangkat Keras
+              </h2>
+              <p className="text-xs text-brand-muted">
+                Sensor pH, sensor gas VOC MS1100, mikrokontroler ESP32-S3, dan slot unit alat FRESHGUARD AI
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {article.hardwareGallery.map((item, idx) => (
+              <div
+                key={idx}
+                className="bg-white rounded-3xl border border-brand-border overflow-hidden shadow-subtle hover:border-brand-primary/60 transition-all flex flex-col justify-between"
+              >
+                <div className="relative w-full h-56 bg-slate-950 overflow-hidden flex items-center justify-center">
+                  <Image
+                    src={item.imageUrl}
+                    alt={item.alt}
+                    fill
+                    sizes="(max-width: 640px) 100vw, 400px"
+                    className="object-contain p-2"
+                  />
+                  <div className="absolute top-3 left-3">
+                    <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-brand-dark text-brand-primary shadow-xs">
+                      {item.badge}
+                    </span>
+                  </div>
+                  {item.isUserDevice && (
+                    <div className="absolute bottom-2 inset-x-2 bg-black/80 backdrop-blur-xs text-[10px] text-brand-primary px-2.5 py-1.5 rounded-xl text-center font-semibold border border-brand-primary/40">
+                      Letakkan foto alat Anda di: public/images/alat-freshguard-ai.jpg
+                    </div>
+                  )}
+                </div>
+
+                <div className="p-5 space-y-2 flex-1 flex flex-col justify-between">
+                  <div>
+                    <h3 className="font-bold text-base text-brand-text">
+                      {item.title}
+                    </h3>
+                    <p className="text-xs text-brand-muted leading-relaxed mt-1">
+                      {item.desc}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Article Content Sections */}
       <div className="prose max-w-none space-y-6 text-sm sm:text-base text-brand-text leading-relaxed">

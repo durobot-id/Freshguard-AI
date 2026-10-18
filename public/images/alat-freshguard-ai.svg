@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="alatBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#143D24"/>
+      <stop offset="50%" stop-color="#0E2818"/>
+      <stop offset="100%" stop-color="#07170E"/>
+    </linearGradient>
+    <linearGradient id="enclosureGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#223328"/>
+      <stop offset="100%" stop-color="#15211A"/>
+    </linearGradient>
+    <linearGradient id="screenGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="500" fill="url(#alatBg)"/>
+  <rect x="20" y="20" width="760" height="460" rx="20" fill="none" stroke="#72D94C" stroke-width="1.5" stroke-opacity="0.3" stroke-dasharray="6 4"/>
+
+  <!-- Device Enclosure Graphic -->
+  <g transform="translate(180, 70)">
+    <!-- Box Shadow & Body -->
+    <rect x="-10" y="10" width="460" height="320" rx="28" fill="#050C07" opacity="0.6"/>
+    <rect x="0" y="0" width="440" height="310" rx="24" fill="url(#enclosureGrad)" stroke="#72D94C" stroke-width="2.5"/>
+
+    <!-- Top Status LED & Brand -->
+    <circle cx="40" cy="38" r="6" fill="#72D94C"/>
+    <text x="60" y="43" fill="#FFFFFF" font-size="14" font-weight="900" font-family="sans-serif">FRESHGUARD AI</text>
+    <text x="215" y="43" fill="#72D94C" font-size="11" font-weight="bold" font-family="monospace">DEVICE UNIT</text>
+
+    <!-- Embedded Display Screen -->
+    <rect x="35" y="70" width="370" height="150" rx="14" fill="url(#screenGrad)" stroke="#334155" stroke-width="2"/>
+    
+    <!-- Screen Content: Freshguard Status -->
+    <text x="55" y="105" fill="#94A3B8" font-size="11" font-family="sans-serif">STATUS DETEKSI AI RANDOM FOREST</text>
+    
+    <rect x="55" y="120" width="130" height="36" rx="8" fill="#72D94C" fill-opacity="0.15" stroke="#72D94C"/>
+    <text x="120" y="144" fill="#72D94C" font-size="18" font-weight="900" font-family="sans-serif" text-anchor="middle">SEGAR</text>
+
+    <!-- Sensor Live Readings on Screen -->
+    <g transform="translate(220, 115)">
+      <text x="0" y="18" fill="#E2E8F0" font-size="13" font-family="sans-serif">pH: <tspan font-weight="bold" fill="#72D94C">6.80</tspan></text>
+      <text x="0" y="38" fill="#E2E8F0" font-size="13" font-family="sans-serif">VOC: <tspan font-weight="bold" fill="#38BDF8">20 (MS1100)</tspan></text>
+      <text x="0" y="58" fill="#94A3B8" font-size="10" font-family="sans-serif">MCU: ESP32-S3 | Wi-Fi Connected</text>
+    </g>
+
+    <!-- Sensor Probes Connecting Ports -->
+    <g transform="translate(50, 245)">
+      <!-- pH BNC Port -->
+      <circle cx="35" cy="20" r="16" fill="#475569" stroke="#94A3B8" stroke-width="2"/>
+      <circle cx="35" cy="20" r="6" fill="#FBBF24"/>
+      <text x="35" y="50" fill="#94A3B8" font-size="9" font-family="sans-serif" text-anchor="middle">Port Sensor pH</text>
+
+      <!-- VOC MS1100 Gas Grille Port -->
+      <circle cx="150" cy="20" r="16" fill="#475569" stroke="#38BDF8" stroke-width="2"/>
+      <circle cx="150" cy="20" r="10" fill="#1E293B"/>
+      <text x="150" y="50" fill="#94A3B8" font-size="9" font-family="sans-serif" text-anchor="middle">Sensor Gas MS1100</text>
+
+      <!-- Power & Firebase Sync -->
+      <circle cx="270" cy="20" r="14" fill="#14532D" stroke="#72D94C" stroke-width="2"/>
+      <text x="270" y="24" fill="#72D94C" font-size="10" font-weight="bold" font-family="sans-serif" text-anchor="middle">RTDB</text>
+      <text x="270" y="50" fill="#94A3B8" font-size="9" font-family="sans-serif" text-anchor="middle">Firebase Sync</text>
+    </g>
+  </g>
+
+  <!-- User Photo Replacement Notice Box -->
+  <rect x="60" y="420" width="680" height="42" rx="10" fill="#0B2315" stroke="#72D94C" stroke-width="1"/>
+  <text x="400" y="446" fill="#EAF8E3" font-size="12" font-family="sans-serif" text-anchor="middle">
+    <tspan fill="#72D94C" font-weight="bold">Slot Foto Alat Anda:</tspan> Letakkan foto alat fisik Anda di <tspan font-family="monospace" fill="#38BDF8">public/images/alat-freshguard-ai.jpg</tspan> untuk menampilkannya di sini.
+  </text>
+</svg>

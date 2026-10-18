@@ -73,13 +73,13 @@ export default function EdukasiPage() {
               className="group flex flex-col bg-white rounded-3xl border border-brand-border overflow-hidden hover:border-brand-primary/50 hover:shadow-card transition-all"
             >
               {/* Cover Image with alt text */}
-              <div className="relative w-full h-48 bg-gray-100 overflow-hidden">
+              <div className={`relative w-full h-48 overflow-hidden ${article.imageUrl.endsWith('.svg') ? 'bg-slate-950' : 'bg-gray-100'}`}>
                 <Image
                   src={article.imageUrl}
                   alt={article.imageAlt}
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  className={article.imageUrl.endsWith('.svg') ? "object-contain p-2 group-hover:scale-105 transition-transform duration-300" : "object-cover group-hover:scale-105 transition-transform duration-300"}
                 />
                 <div className="absolute top-3 left-3">
                   <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-white/95 text-brand-dark shadow-xs">

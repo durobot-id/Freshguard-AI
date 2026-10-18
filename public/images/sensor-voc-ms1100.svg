@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="vocBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#102B1D"/>
+      <stop offset="100%" stop-color="#07170E"/>
+    </linearGradient>
+    <linearGradient id="vocPcbGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#144B7E"/>
+      <stop offset="100%" stop-color="#0B2F52"/>
+    </linearGradient>
+    <radialGradient id="meshGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#E2E8F0"/>
+      <stop offset="60%" stop-color="#94A3B8"/>
+      <stop offset="100%" stop-color="#475569"/>
+    </radialGradient>
+    <pattern id="meshPattern" width="6" height="6" patternUnits="userSpaceOnUse">
+      <circle cx="3" cy="3" r="1.5" fill="#1E293B"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="500" fill="url(#vocBgGrad)"/>
+  <rect x="20" y="20" width="760" height="460" rx="20" fill="none" stroke="#72D94C" stroke-width="1.5" stroke-opacity="0.3" stroke-dasharray="6 4"/>
+
+  <!-- Technical Grid -->
+  <path d="M 50 100 H 750 M 50 200 H 750 M 50 300 H 750 M 50 400 H 750" stroke="#72D94C" stroke-opacity="0.08" stroke-width="1"/>
+  <path d="M 200 50 V 450 M 400 50 V 450 M 600 50 V 450" stroke="#72D94C" stroke-opacity="0.08" stroke-width="1"/>
+
+  <!-- Center-Left: MS1100 Sensor Module Board -->
+  <g transform="translate(100, 100)">
+    <!-- Main PCB Blue Board -->
+    <rect x="0" y="0" width="280" height="260" rx="16" fill="url(#vocPcbGrad)" stroke="#38BDF8" stroke-width="2.5"/>
+
+    <!-- Corner Mounting Holes -->
+    <circle cx="18" cy="18" r="8" fill="#07170E" stroke="#38BDF8" stroke-width="1.5"/>
+    <circle cx="262" cy="18" r="8" fill="#07170E" stroke="#38BDF8" stroke-width="1.5"/>
+    <circle cx="18" cy="242" r="8" fill="#07170E" stroke="#38BDF8" stroke-width="1.5"/>
+    <circle cx="262" cy="242" r="8" fill="#07170E" stroke="#38BDF8" stroke-width="1.5"/>
+
+    <!-- SilkScreen Text -->
+    <text x="140" y="32" fill="#FFFFFF" font-size="14" font-weight="900" font-family="sans-serif" text-anchor="middle">SENSOR GAS VOC MS-1100</text>
+    <text x="140" y="48" fill="#93C5FD" font-size="10" font-family="sans-serif" text-anchor="middle">High Sensitivity Spoilage Gas Detection</text>
+
+    <!-- Metal Mesh Sensor Element MS1100 -->
+    <g transform="translate(140, 130)">
+      <!-- Outer Metal Ring -->
+      <circle cx="0" cy="0" r="54" fill="url(#meshGrad)" stroke="#64748B" stroke-width="3"/>
+      <circle cx="0" cy="0" r="46" fill="#CBD5E1"/>
+      <!-- Mesh Texture -->
+      <circle cx="0" cy="0" r="44" fill="url(#meshPattern)"/>
+      <!-- Sensor Core Label -->
+      <rect x="-30" y="-10" width="60" height="20" rx="4" fill="#0F172A" fill-opacity="0.8"/>
+      <text x="0" y="4" fill="#38BDF8" font-size="11" font-weight="bold" font-family="monospace" text-anchor="middle">MS1100</text>
+    </g>
+
+    <!-- Trimpot / Potentiometer for Sensitivity Calibration -->
+    <rect x="25" y="105" width="45" height="50" rx="4" fill="#1E40AF" stroke="#60A5FA" stroke-width="1.5"/>
+    <circle cx="47" cy="130" r="14" fill="#E2E8F0"/>
+    <line x1="40" y1="130" x2="54" y2="130" stroke="#475569" stroke-width="2.5"/>
+
+    <!-- Comparator IC LM393 -->
+    <rect x="210" y="105" width="45" height="50" rx="3" fill="#0F172A" stroke="#475569" stroke-width="1.5"/>
+    <circle cx="218" cy="115" r="2.5" fill="#64748B"/>
+    <text x="232" y="134" fill="#94A3B8" font-size="8" font-family="monospace" text-anchor="middle">LM393</text>
+
+    <!-- Status LEDs (Power & Signal) -->
+    <circle cx="47" cy="180" r="4.5" fill="#22C55E"/>
+    <text x="47" y="196" fill="#86EFAC" font-size="8" font-family="sans-serif" text-anchor="middle">PWR</text>
+
+    <circle cx="232" cy="180" r="4.5" fill="#EF4444"/>
+    <text x="232" y="196" fill="#FCA5A5" font-size="8" font-family="sans-serif" text-anchor="middle">DOUT</text>
+
+    <!-- 4-Pin Header (Bottom) -->
+    <g transform="translate(85, 215)">
+      <rect x="0" y="0" width="110" height="26" rx="4" fill="#0F172A" stroke="#334155" stroke-width="1.5"/>
+      <circle cx="16" cy="13" r="4" fill="#FBBF24"/>
+      <circle cx="42" cy="13" r="4" fill="#FBBF24"/>
+      <circle cx="68" cy="13" r="4" fill="#FBBF24"/>
+      <circle cx="94" cy="13" r="4" fill="#FBBF24"/>
+      <text x="16" y="38" fill="#FBBF24" font-size="9" font-family="monospace" text-anchor="middle">VCC</text>
+      <text x="42" y="38" fill="#94A3B8" font-size="9" font-family="monospace" text-anchor="middle">GND</text>
+      <text x="68" y="38" fill="#38BDF8" font-size="9" font-family="monospace" text-anchor="middle">DO</text>
+      <text x="94" y="38" fill="#72D94C" font-size="9" font-family="monospace" text-anchor="middle">AO</text>
+    </g>
+  </g>
+
+  <!-- Right Details & Explanations -->
+  <g transform="translate(420, 100)">
+    <!-- Gas Spoilage Molecules Illustration -->
+    <g transform="translate(0, 30)">
+      <circle cx="50" cy="20" r="16" fill="#72D94C" fill-opacity="0.2" stroke="#72D94C" stroke-width="1.5"/>
+      <text x="50" y="25" fill="#72D94C" font-size="11" font-weight="bold" font-family="sans-serif" text-anchor="middle">VOC</text>
+
+      <circle cx="110" cy="40" r="14" fill="#38BDF8" fill-opacity="0.2" stroke="#38BDF8" stroke-width="1.5"/>
+      <text x="110" y="44" fill="#38BDF8" font-size="9" font-weight="bold" font-family="sans-serif" text-anchor="middle">CH2O</text>
+
+      <circle cx="170" cy="15" r="15" fill="#FBBF24" fill-opacity="0.2" stroke="#FBBF24" stroke-width="1.5"/>
+      <text x="170" y="20" fill="#FBBF24" font-size="10" font-weight="bold" font-family="sans-serif" text-anchor="middle">Gas</text>
+
+      <text x="210" y="25" fill="#FFFFFF" font-size="14" font-weight="bold" font-family="sans-serif">Uap Gas Pembusukan Makanan</text>
+      <text x="210" y="45" fill="#94A3B8" font-size="12" font-family="sans-serif">Mendeteksi senyawa volatil organik dari bakteri</text>
+    </g>
+
+    <g transform="translate(0, 120)">
+      <rect x="0" y="0" width="320" height="60" rx="12" fill="#0F172A" stroke="#334155" stroke-width="1"/>
+      <text x="16" y="25" fill="#72D94C" font-size="13" font-weight="bold" font-family="sans-serif">Pin AO (Analog Output) ke ESP32-S3</text>
+      <text x="16" y="45" fill="#CBD5E1" font-size="11" font-family="sans-serif">Mengirimkan sinyal resistansi gas secara real-time</text>
+    </g>
+
+    <g transform="translate(0, 195)">
+      <rect x="0" y="0" width="320" height="60" rx="12" fill="#0F172A" stroke="#334155" stroke-width="1"/>
+      <text x="16" y="25" fill="#38BDF8" font-size="13" font-weight="bold" font-family="sans-serif">Fitur Utama Sensor MS1100</text>
+      <text x="16" y="45" fill="#CBD5E1" font-size="11" font-family="sans-serif">Respon cepat, stabilitas tinggi, dan tahan lama</text>
+    </g>
+  </g>
+
+  <!-- Top Left Badge -->
+  <rect x="45" y="45" width="320" height="42" rx="12" fill="#38BDF8" fill-opacity="0.15" stroke="#38BDF8" stroke-width="1.5"/>
+  <text x="65" y="72" fill="#38BDF8" font-size="16" font-weight="900" font-family="sans-serif">MODUL SENSOR GAS VOC MS-1100</text>
+
+  <!-- Footer Specs -->
+  <rect x="45" y="415" width="710" height="45" rx="10" fill="#07170E" stroke="#38BDF8" stroke-opacity="0.3"/>
+  <text x="65" y="442" fill="#EAF8E3" font-size="12" font-family="sans-serif">
+    <tspan font-weight="bold" fill="#38BDF8">Spesifikasi:</tspan> Tegangan Kerja: DC 5V | Target Gas: VOCs, Formaldehyde, Benzene, Alkohol | Tipe Sinyal: Analog (AO) &amp; Digital (DO)
+  </text>
+</svg>

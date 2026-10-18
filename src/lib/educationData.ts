@@ -29,6 +29,14 @@ export interface EducationArticle {
     url?: string;
   }[];
   relatedSlugs: string[];
+  hardwareGallery?: {
+    title: string;
+    desc: string;
+    imageUrl: string;
+    alt: string;
+    badge: string;
+    isUserDevice?: boolean;
+  }[];
 }
 
 export const EDUCATION_ARTICLES: EducationArticle[] = [
@@ -320,14 +328,45 @@ export const EDUCATION_ARTICLES: EducationArticle[] = [
     shortDescription: "Pelajari cara kerja alat FRESHGUARD AI berbasis mikrokontroler ESP32-S3, sensor pH & VOC, serta model AI Random Forest dalam mendeteksi kesegaran makanan.",
     readTime: "5 menit baca",
     category: "Teknologi & AI",
-    imageUrl: "https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?auto=format&fit=crop&w=1200&q=80",
-    imageAlt: "Pengukuran sensor laboratorium dan pemrosesan komputasi digital",
-    imageCaption: "Alat FRESHGUARD AI memadukan mikrokontroler ESP32-S3, sensor pH dan VOC, serta model AI Random Forest.",
+    imageUrl: "/images/alat-freshguard-ai.svg",
+    imageAlt: "Perangkat cerdas FRESHGUARD AI dengan ESP32-S3, sensor pH, dan sensor gas VOC MS1100",
+    imageCaption: "Alat FRESHGUARD AI memadukan mikrokontroler ESP32-S3, sensor pH, sensor VOC MS1100, serta model AI Random Forest.",
     reviewDate: "19 Oktober 2026",
     summaryPoints: [
-      "Alat FRESHGUARD AI menggunakan mikrokontroler ESP32-S3 untuk membaca data sensor pH dan VOC secara presisi.",
+      "Alat FRESHGUARD AI menggunakan mikrokontroler ESP32-S3 untuk membaca data sensor pH dan VOC MS1100 secara presisi.",
       "Data pembacaan sensor dimasukkan ke model Machine Learning Random Forest untuk mengklasifikasikan kesegaran makanan (Segar atau Basi).",
       "Hasil klasifikasi dan nilai pengukuran langsung dikirimkan secara otomatis ke Firebase Realtime Database.",
+    ],
+    hardwareGallery: [
+      {
+        title: "Alat FRESHGUARD AI (Slot Perangkat)",
+        desc: "Unit pemantau utama yang mengintegrasikan mikrokontroler ESP32-S3, probe sensor pH, dan sensor gas VOC MS1100. Letakkan foto perangkat asli Anda di 'public/images/alat-freshguard-ai.jpg' untuk menampilkannya secara langsung.",
+        imageUrl: "/images/alat-freshguard-ai.svg",
+        alt: "Unit Perangkat Keras FRESHGUARD AI",
+        badge: "Perangkat Utama",
+        isUserDevice: true,
+      },
+      {
+        title: "Sensor pH & Modul Sinyal",
+        desc: "Probe elektroda kaca pengukur konsentrasi ion hidrogen (pH 0.0 - 14.0) untuk mendeteksi perubahan asam/basa akibat fermentasi atau dekomposisi makanan.",
+        imageUrl: "/images/sensor-ph.svg",
+        alt: "Modul dan Probe Sensor pH Cairan/Makanan",
+        badge: "Sensor Kimiawi",
+      },
+      {
+        title: "Sensor Gas VOC MS1100",
+        desc: "Modul sensor gas semikonduktor oksida logam MS-1100 dengan sensitivitas tinggi terhadap uap organik volatil seperti formaldehyde, alkohol, dan gas pembusukan.",
+        imageUrl: "/images/sensor-voc-ms1100.svg",
+        alt: "Modul Sensor Gas VOC MS-1100",
+        badge: "Sensor Gas",
+      },
+      {
+        title: "Mikrokontroler ESP32-S3",
+        desc: "Chip komputasi Xtensa 32-bit LX7 Dual-Core dengan Wi-Fi terintegrasi yang mengakuisisi data ADC sensor dan mengirimkan data inferensi ke Firebase Realtime Database.",
+        imageUrl: "/images/esp32-s3.svg",
+        alt: "Mikrokontroler ESP32-S3 DevKit",
+        badge: "Mikrokontroler & IoT",
+      },
     ],
     content: {
       intro:

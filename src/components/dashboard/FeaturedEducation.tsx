@@ -43,13 +43,13 @@ export const FeaturedEducation: React.FC = () => {
             href={`/edukasi/${article.slug}`}
             className="group flex flex-col bg-white rounded-3xl border border-brand-border overflow-hidden hover:border-brand-primary/50 hover:shadow-card transition-all"
           >
-            <div className="relative w-full h-44 bg-gray-100 overflow-hidden">
+            <div className={`relative w-full h-44 overflow-hidden ${article.imageUrl.endsWith('.svg') ? 'bg-slate-950' : 'bg-gray-100'}`}>
               <Image
                 src={article.imageUrl}
                 alt={article.imageAlt}
                 fill
                 sizes="(max-width: 640px) 100vw, 50vw"
-                className="object-cover group-hover:scale-105 transition-transform duration-300"
+                className={article.imageUrl.endsWith('.svg') ? "object-contain p-2 group-hover:scale-105 transition-transform duration-300" : "object-cover group-hover:scale-105 transition-transform duration-300"}
               />
               <div className="absolute top-3 left-3">
                 <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-white/90 backdrop-blur-xs text-brand-dark shadow-xs">
