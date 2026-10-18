@@ -132,7 +132,7 @@ export const LatestDetectionCard: React.FC<LatestDetectionCardProps> = ({
               {record.label}
             </span>
             <span className="text-xs text-brand-muted max-w-[200px] leading-tight hidden lg:inline">
-              Klasifikasi otomatis dari pembacaan perangkat
+              Klasifikasi model AI Random Forest via ESP32-S3
             </span>
           </div>
         </div>

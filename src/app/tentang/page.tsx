@@ -5,66 +5,37 @@ import {
   ShieldCheck,
   Cpu,
   Database,
-  Layers,
-  ShieldAlert,
   ArrowRight,
   BookOpen,
+  BrainCircuit,
+  Sparkles,
 } from "lucide-react";
-import { FoodSafetyDisclaimer } from "@/components/common/FoodSafetyDisclaimer";
 
 export const metadata: Metadata = {
   title: "Tentang FRESHGUARD AI — Pemantauan Deteksi Kesegaran Makanan",
   description:
-    "Pelajari tujuan proyek FRESHGUARD AI, integrasi sensor IoT, skema data Firebase Realtime Database, dan batasan operasionalnya.",
+    "Pelajari tujuan FRESHGUARD AI, cara kerja sensor ESP32-S3, model AI Random Forest, dan database terkonfigurasi dengan Firebase.",
 };
 
 export default function TentangPage() {
-  const fields = [
-    {
-      name: "Key record",
-      type: "String (ddMMyyyyHHmm)",
-      desc: "Menyimpan identitas unik dan waktu pembacaan perangkat (misal: 191020261230 berarti 19 Oktober 2026 pukul 12.30 WIB).",
-    },
-    {
-      name: "Label",
-      type: "String",
-      desc: "Status klasifikasi hasil deteksi sensor, disajikan persis sesuai nilai yang diterima (misalnya 'Segar').",
-    },
-    {
-      name: "Tipe_makanan",
-      type: "String",
-      desc: "Kategori bahan makanan yang diuji (misal: Nasi, Lauk Kering, Lauk Basah, Sayur, Sayur Asam, Kuah, Buah). Sistem bersifat dinamis menerima tipe baru.",
-    },
-    {
-      name: "PH",
-      type: "Number",
-      desc: "Derajat keasaman atau kebasaan sampel makanan yang diukur oleh probe elektrokimia.",
-    },
-    {
-      name: "VOC",
-      type: "Number",
-      desc: "Konsentrasi senyawa organik volatil terdeteksi sensor gas MOS. Nilai ditampilkan dalam bentuk angka numerik asli dari perangkat.",
-    },
-  ];
-
   return (
     <div className="max-w-3xl mx-auto space-y-8">
       {/* Header */}
       <section aria-labelledby="about-title" className="space-y-3">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-brand-pale text-brand-dark border border-brand-primary/30">
           <ShieldCheck className="w-4 h-4 text-brand-dark" aria-hidden="true" />
-          <span>Informasi Proyek</span>
+          <span>Informasi FRESHGUARD AI</span>
         </div>
         <h1 id="about-title" className="text-2xl sm:text-4xl font-black text-brand-text tracking-tight">
           Tentang FRESHGUARD AI
         </h1>
         <p className="text-sm sm:text-base text-brand-muted leading-relaxed">
-          Platform web pemantauan hasil pengujian kesegaran makanan berbasis integrasi mikrokontroler
-          sensor dan Firebase Realtime Database yang dirancang khusus untuk kenyamanan mobile.
+          Platform web pemantauan kesegaran makanan cerdas yang mengintegrasikan mikrokontroler
+          ESP32-S3, sensor pH dan VOC, model AI Random Forest, serta Firebase Realtime Database.
         </p>
       </section>
 
-      {/* Tujuan Proyek */}
+      {/* Tujuan FRESHGUARD AI */}
       <section
         aria-labelledby="purpose-heading"
         className="p-6 sm:p-8 rounded-3xl bg-white border border-brand-border shadow-subtle space-y-4"
@@ -74,88 +45,107 @@ export default function TentangPage() {
             <Cpu className="w-5 h-5" aria-hidden="true" />
           </div>
           <h2 id="purpose-heading" className="text-lg sm:text-xl font-bold text-brand-text">
-            Tujuan Proyek
+            Tujuan FRESHGUARD AI
           </h2>
         </div>
         <p className="text-xs sm:text-sm text-brand-muted leading-relaxed">
-          FRESHGUARD AI dikembangkan untuk menjembatani perangkat keras deteksi kesegaran makanan
-          dengan antarmuka pengguna yang bersih, responsif, dan mudah dipahami. Website bertindak
-          sebagai layar pemantauan otomatis (real-time monitoring dashboard) yang langsung memperbarui
-          data tanpa perlu memuat ulang halaman saat sensor mengirimkan hasil uji terbaru.
+          FRESHGUARD AI bertujuan menyediakan sistem pemantauan kesegaran makanan yang cerdas, cepat,
+          dan otomatis bagi pengguna rumah tangga maupun pengelola makanan. Dengan memadukan perangkat
+          sensor fisik dan kecerdasan buatan, sistem ini membantu mengidentifikasi status kesegaran
+          makanan secara langsung tanpa proses rumit.
         </p>
-        <p className="text-xs sm:text-sm text-brand-muted leading-relaxed">
-          Selain menyajikan angka dan status teknis, FRESHGUARD AI berkomitmen meningkatkan kesadaran
-          masyarakat terhadap praktik penanganan bahan pangan yang higienis melalui modul edukasi
-          komprehensif.
-        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+          <div className="p-4 rounded-2xl bg-brand-bg border border-brand-border space-y-1.5">
+            <div className="flex items-center gap-2 text-brand-dark font-bold text-xs">
+              <BrainCircuit className="w-4 h-4" aria-hidden="true" />
+              <span>Klasifikasi Cerdas AI</span>
+            </div>
+            <p className="text-xs text-brand-muted leading-relaxed">
+              Memproses data pH dan gas VOC melalui model Random Forest untuk menentukan apakah makanan
+              masih segar atau sudah basi.
+            </p>
+          </div>
+
+          <div className="p-4 rounded-2xl bg-brand-bg border border-brand-border space-y-1.5">
+            <div className="flex items-center gap-2 text-brand-dark font-bold text-xs">
+              <Sparkles className="w-4 h-4" aria-hidden="true" />
+              <span>Pemantauan Real-Time</span>
+            </div>
+            <p className="text-xs text-brand-muted leading-relaxed">
+              Menampilkan hasil deteksi secara otomatis ke antarmuka web responsif begitu ESP32-S3
+              mengunggah data uji terbaru.
+            </p>
+          </div>
+        </div>
       </section>
 
-      {/* Skema Field yang Ditampilkan */}
+      {/* Cara Kerja Alat FRESHGUARD AI */}
       <section
-        aria-labelledby="fields-heading"
+        aria-labelledby="device-heading"
         className="p-6 sm:p-8 rounded-3xl bg-white border border-brand-border shadow-subtle space-y-4"
       >
         <div className="flex items-center gap-2.5">
           <div className="w-9 h-9 rounded-xl bg-brand-pale text-brand-dark flex items-center justify-center">
-            <Layers className="w-5 h-5" aria-hidden="true" />
+            <BrainCircuit className="w-5 h-5" aria-hidden="true" />
           </div>
-          <h2 id="fields-heading" className="text-lg sm:text-xl font-bold text-brand-text">
-            Ringkasan Field Data Sensor
+          <h2 id="device-heading" className="text-lg sm:text-xl font-bold text-brand-text">
+            Cara Kerja Alat FRESHGUARD AI
           </h2>
         </div>
-        <p className="text-xs text-brand-muted">
-          Berikut adalah atribut data yang disinkronisasikan dari node Firebase Realtime Database:
+        <p className="text-xs sm:text-sm text-brand-muted leading-relaxed">
+          Alat FRESHGUARD AI menggunakan mikrokontroler canggih <strong>ESP32-S3</strong> yang terhubung
+          dengan probe sensor pH dan sensor gas VOC (Volatile Organic Compounds):
         </p>
-
-        <div className="divide-y divide-brand-border">
-          {fields.map((f, i) => (
-            <div key={i} className="py-3 flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4 text-xs">
-              <div className="sm:w-40 shrink-0 font-mono font-bold text-brand-dark">
-                {f.name}
-              </div>
-              <div className="text-brand-muted sm:flex-1">
-                <span className="inline-block px-1.5 py-0.5 rounded bg-gray-100 text-[10px] font-mono mr-2 text-gray-700">
-                  {f.type}
-                </span>
-                <span>{f.desc}</span>
-              </div>
-            </div>
-          ))}
-        </div>
+        <ol className="space-y-3 text-xs sm:text-sm text-brand-muted list-decimal list-inside leading-relaxed">
+          <li>
+            <strong className="text-brand-text">Pengambilan Data Sensor:</strong> Sensor membaca derajat
+            keasaman (pH) dan konsentrasi senyawa volatil (VOC) dari uap makanan.
+          </li>
+          <li>
+            <strong className="text-brand-text">Pemrosesan Model AI (Random Forest):</strong> Nilai pH
+            dan VOC diinput ke dalam algoritma Machine Learning <strong>Random Forest</strong> yang telah
+            dilatih untuk mengklasifikasikan kondisi makanan apakah dalam kondisi <strong>Segar</strong> atau{" "}
+            <strong>Basi</strong>.
+          </li>
+          <li>
+            <strong className="text-brand-text">Pengiriman Otomatis oleh ESP32-S3:</strong> Mikrokontroler
+            ESP32-S3 mengirimkan hasil klasifikasi, nilai sensor, tipe makanan, dan waktu pembacaan ke
+            Firebase Realtime Database melalui koneksi internet.
+          </li>
+        </ol>
       </section>
 
-      {/* Sumber Data & Arsitektur Realtime */}
+      {/* Database Terkonfigurasi dengan Firebase */}
       <section
-        aria-labelledby="architecture-heading"
+        aria-labelledby="database-heading"
         className="p-6 sm:p-8 rounded-3xl bg-white border border-brand-border shadow-subtle space-y-3"
       >
         <div className="flex items-center gap-2.5">
           <div className="w-9 h-9 rounded-xl bg-brand-pale text-brand-dark flex items-center justify-center">
             <Database className="w-5 h-5" aria-hidden="true" />
           </div>
-          <h2 id="architecture-heading" className="text-lg sm:text-xl font-bold text-brand-text">
-            Arsitektur &amp; Sumber Data
+          <h2 id="database-heading" className="text-lg sm:text-xl font-bold text-brand-text">
+            Database Terkonfigurasi dengan Firebase
           </h2>
         </div>
         <p className="text-xs sm:text-sm text-brand-muted leading-relaxed">
-          Koneksi data menggunakan WebSocket persisten melalui Firebase Realtime Database SDK resmi.
-          Website tidak menggunakan polling berulang atau reload manual, melainkan merespons secara
-          reaktif setiap perubahan pada root database node.
+          Sistem FRESHGUARD AI terintegrasi langsung dengan <strong>Firebase Realtime Database</strong>.
+          Setiap kali ESP32-S3 selesai melakukan inferensi AI dan menyimpan record baru ke database,
+          antarmuka website langsung memperbarui data secara reaktif dan instan tanpa perlu memuat ulang
+          halaman atau menekan tombol refresh.
         </p>
-        <div className="p-3.5 rounded-xl bg-brand-bg border border-brand-border font-mono text-[11px] text-brand-muted break-all">
-          Host: deteksi-makanan-basi-default-rtdb.asia-southeast1.firebasedatabase.app
-        </div>
+        <p className="text-xs sm:text-sm text-brand-muted leading-relaxed">
+          Koneksi sinkronisasi data ini menjamin seluruh pembacaan riwayat tersimpan rapi dan dapat
+          diakses kapan saja dari berbagai perangkat seperti ponsel pintar, tablet, maupun komputer.
+        </p>
       </section>
-
-      {/* Batasan Sensor & Keamanan Pangan */}
-      <FoodSafetyDisclaimer />
 
       {/* Link to Education */}
       <div className="p-6 rounded-3xl bg-brand-pale border border-brand-primary/40 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h3 className="font-bold text-base text-brand-dark">Pelajari Lebih Lanjut</h3>
           <p className="text-xs text-brand-muted">
-            Kunjungi panduan edukasi untuk tips penyimpanan makanan dan prinsip keamanan pangan.
+            Kunjungi panduan edukasi untuk tips penyimpanan makanan dan pemahaman cara kerja sensor pH serta VOC.
           </p>
         </div>
         <Link

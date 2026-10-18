@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { ShieldCheck, Database, HeartHandshake, ShieldAlert } from "lucide-react";
+import { ShieldCheck, HeartHandshake } from "lucide-react";
 
 export const Footer: React.FC = () => {
   return (
@@ -20,14 +20,10 @@ export const Footer: React.FC = () => {
               </span>
             </div>
             <p className="text-xs text-brand-muted leading-relaxed max-w-md">
-              Sistem pemantauan hasil deteksi kesegaran makanan berbasis sensor perangkat cerdas dan
-              Firebase Realtime Database. Dirancang untuk membantu pengawasan kondisi bahan pangan
-              secara cepat, transparan, dan teredukasi.
+              Sistem pemantauan hasil deteksi kesegaran makanan berbasis sensor pH, sensor gas VOC,
+              mikrokontroler ESP32-S3, dan model Machine Learning Random Forest yang terhubung dengan
+              Firebase Realtime Database.
             </p>
-            <div className="flex items-center gap-2 pt-1 text-[11px] text-brand-muted">
-              <Database className="w-3.5 h-3.5 text-brand-dark" aria-hidden="true" />
-              <span>Sumber Data: Firebase Realtime Database (asia-southeast1)</span>
-            </div>
           </div>
 
           {/* Quick Links */}
@@ -67,6 +63,14 @@ export const Footer: React.FC = () => {
             <ul className="space-y-2">
               <li>
                 <Link
+                  href="/edukasi/memahami-hasil-sensor-ph-dan-voc"
+                  className="hover:text-brand-dark transition-colors"
+                >
+                  Memahami Alat &amp; Sensor
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/edukasi/tanda-tanda-makanan-mulai-basi"
                   className="hover:text-brand-dark transition-colors"
                 >
@@ -81,27 +85,8 @@ export const Footer: React.FC = () => {
                   Cara Menyimpan Makanan
                 </Link>
               </li>
-              <li>
-                <Link
-                  href="/edukasi/memahami-hasil-sensor-ph-dan-voc"
-                  className="hover:text-brand-dark transition-colors"
-                >
-                  Memahami pH &amp; VOC
-                </Link>
-              </li>
             </ul>
           </div>
-        </div>
-
-        {/* Disclaimer Strip */}
-        <div className="p-4 rounded-xl bg-brand-bg border border-brand-border mb-6 flex items-start gap-3">
-          <ShieldAlert className="w-4 h-4 text-brand-dark shrink-0 mt-0.5" aria-hidden="true" />
-          <p className="text-[11px] leading-relaxed text-brand-muted">
-            <strong className="text-brand-text">Pernyataan Penyangkalan (Disclaimer):</strong> Hasil
-            deteksi dan status yang disajikan adalah pembacaan eksperimental sensor perangkat
-            pengguna. Informasi ini bukan sertifikasi keamanan pangan resmi, jaminan steril patogen,
-            atau pengganti evaluasi sensorik higienis mandiri.
-          </p>
         </div>
 
         {/* Bottom copyright */}

@@ -49,12 +49,8 @@ export default function EdukasiPage() {
 
           <div className="pt-2 flex items-center gap-4 text-xs text-gray-300">
             <span className="flex items-center gap-1.5">
-              <ShieldCheck className="w-4 h-4 text-brand-primary" aria-hidden="true" />
-              <span>5 Materi Wajib Standar PRD</span>
-            </span>
-            <span className="flex items-center gap-1.5">
               <HeartHandshake className="w-4 h-4 text-brand-primary" aria-hidden="true" />
-              <span>Bersumber dari BPOM, WHO &amp; USDA</span>
+              <span>Bersumber dari Referensi Ilmiah Tepercaya (BPOM, WHO &amp; USDA)</span>
             </span>
           </div>
         </div>

@@ -135,10 +135,6 @@ export const Navbar: React.FC = () => {
                 <span>Total Data Tersimpan</span>
                 <span className="font-semibold text-brand-text">{records.length} record</span>
               </div>
-              <div className="flex items-center justify-between">
-                <span>Sumber Data</span>
-                <span className="font-medium text-brand-text">Firebase RTDB</span>
-              </div>
             </div>
           </div>
         </div>

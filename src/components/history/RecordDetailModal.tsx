@@ -9,7 +9,6 @@ import {
   Activity,
   Gauge,
   Info,
-  ShieldAlert,
   Hash,
 } from "lucide-react";
 import Link from "next/link";
@@ -134,15 +133,6 @@ export const RecordDetailModal: React.FC<RecordDetailModalProps> = ({
             <span className="font-medium">Firebase Record ID:</span>
           </div>
           <span className="font-mono font-bold">{record.id}</span>
-        </div>
-
-        {/* Safety Disclaimer */}
-        <div className="p-4 rounded-xl bg-amber-50/70 border border-amber-200/80 text-xs text-amber-950 flex items-start gap-2.5">
-          <ShieldAlert className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" aria-hidden="true" />
-          <p className="leading-relaxed">
-            Data ini diperoleh langsung dari modul sensor perangkat. Status label bukan kepastian
-            bebas mikroorganisme patogen.
-          </p>
         </div>
 
         {/* Action Buttons */}

@@ -4,7 +4,6 @@ import React, { use } from "react";
 import Link from "next/link";
 import { useDetections } from "@/context/DetectionContext";
 import { parseRecordKey } from "@/lib/dateUtils";
-import { FoodSafetyDisclaimer } from "@/components/common/FoodSafetyDisclaimer";
 import {
   ArrowLeft,
   Calendar,
@@ -13,8 +12,6 @@ import {
   Gauge,
   Hash,
   Clock,
-  ShieldCheck,
-  AlertTriangle,
 } from "lucide-react";
 
 interface RecordDetailPageProps {
@@ -166,9 +163,6 @@ export default function RecordDetailPage({ params }: RecordDetailPageProps) {
             </span>
           </div>
         </div>
-
-        {/* Food safety disclaimer */}
-        <FoodSafetyDisclaimer />
       </article>
     </div>
   );

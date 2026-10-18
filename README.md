@@ -1,6 +1,6 @@
 # FRESHGUARD AI — Website Pemantauan Kesegaran Makanan
 
-> Website responsif mobile-first untuk pemantauan hasil deteksi kesegaran makanan berbasis perangkat sensor dan Firebase Realtime Database.
+> Website responsif mobile-first untuk pemantauan hasil deteksi kesegaran makanan berbasis sensor pH, sensor gas VOC, mikrokontroler ESP32-S3, model AI Random Forest, dan Firebase Realtime Database.
 
 ---
 
@@ -9,28 +9,30 @@
 **FRESHGUARD AI** membantu pengguna melihat hasil deteksi kesegaran makanan terbaru dan riwayat pembacaan sensor secara otomatis (real-time tanpa tombol refresh), serta mempelajari panduan penyimpanan bahan pangan higienis dan pencegahan pembusukan.
 
 - **Platform**: Web Responsif Mobile-First (dioptimalkan untuk ponsel mulai lebar 320px, tablet, dan desktop)
-- **Sumber Data**: Firebase Realtime Database
+- **Mikrokontroler Hardware**: ESP32-S3
+- **Sensor**: Sensor pH & Sensor Gas VOC (Volatile Organic Compounds)
+- **Model Kecerdasan Buatan**: Random Forest (Klasifikasi Segar / Basi)
+- **Database**: Database Terkonfigurasi dengan Firebase (Firebase Realtime Database)
 - **Hosting**: Vercel Ready
 - **Bahasa Antarmuka**: Bahasa Indonesia
 
 ---
 
-## 🚀 Fitur Utama Sesuai PRD
+## 🚀 Fitur Utama
 
 1. **Dashboard / Beranda (`/`)**:
    - Status koneksi real-time (**Terhubung**, **Menghubungkan**, **Koneksi terputus**).
    - **Kartu Deteksi Terbaru** sebagai fokus utama:
      - Tanggal dan jam digabung (format ramah pengguna hasil parsing key `ddMMyyyyHHmm`, misal `19 Okt 2026, 12.30`).
-     - Status label asli dari sensor (misal `Segar`).
-     - Tipe makanan dinamis.
-     - Parameter pH dan VOC numerik.
-   - **Cuplikan Riwayat Terbaru**: Daftar pembacaan individual secara vertikal (tanpa kurva tren/grafik sesuai kaidah PRD).
+     - Status label hasil klasifikasi model AI (misal `Segar` / `Basi`).
+     - Tipe makanan dinamis (`Nasi`, `Lauk Kering`, dll.).
+     - Parameter numerik kadar keasaman (pH) dan konsentrasi senyawa volatil (VOC).
+   - **Cuplikan Riwayat Terbaru**: Daftar pembacaan individual secara vertikal (tanpa kurva tren/grafik).
    - **Kartu Edukasi Pilihan**: Cuplikan panduan penyimpanan dengan foto berkualitas tinggi.
-   - Penyangkalan (Disclaimer) keamanan pangan.
 
 2. **Riwayat Deteksi (`/riwayat`)**:
    - Daftar record kronologis dari terbaru ke terlama.
-   - Filter dinamis berdasarkan **Tipe Makanan** (menerima tipe makanan baru otomatis).
+   - Filter dinamis berdasarkan **Tipe Makanan** (otomatis mendeteksi tipe baru dari Firebase).
    - Filter berdasarkan **Status Label**.
    - Fitur pencarian kata kunci berdasarkan tipe makanan atau tanggal.
    - Paginasi rapi dengan target sentuh mobile minimal 44x44 px.
@@ -42,18 +44,18 @@
    - Metadata teknis record key Firebase.
 
 4. **Pusat Edukasi Keamanan Pangan (`/edukasi` & `/edukasi/[slug]`)**:
-   - 5 materi edukasi lengkap sesuai PRD:
-     1. *Tanda-Tanda Makanan Mulai Basi*
-     2. *Cara Menyimpan Makanan Matang dengan Benar*
-     3. *Berapa Lama Sisa Makanan Dapat Disimpan?*
-     4. *Mengapa Makanan Bisa Basi?*
-     5. *Memahami Hasil Sensor pH dan VOC*
-   - Dilengkapi gambar representatif, teks alternatif (*alt text*), estimasi waktu baca, poin kunci, langkah praktis, referensi resmi (BPOM, WHO, USDA, FAO), tanggal peninjauan, dan disclaimer keamanan pangan.
+   - 5 materi edukasi komprehensif:
+     1. *Memahami Hasil Sensor pH, VOC, dan Alat FRESHGUARD AI* (dilengkapi pembahasan ESP32-S3 dan model AI Random Forest)
+     2. *Tanda-Tanda Makanan Mulai Basi*
+     3. *Cara Menyimpan Makanan Matang dengan Benar*
+     4. *Berapa Lama Sisa Makanan Dapat Disimpan?*
+     5. *Mengapa Makanan Bisa Basi?*
+   - Dilengkapi foto relevan, teks alternatif (*alt text*), estimasi waktu baca, poin kunci, langkah praktis, dan referensi ilmiah tepercaya.
 
 5. **Tentang FRESHGUARD AI (`/tentang`)**:
-   - Latar belakang dan tujuan proyek.
-   - Kamus dan spesifikasi teknis field sensor (`Label`, `PH`, `Tipe_makanan`, `VOC`, Key `ddMMyyyyHHmm`).
-   - Penjelasan arsitektur integrasi Firebase Realtime Database.
+   - **Tujuan FRESHGUARD AI**: Menyediakan monitoring kesegaran makanan otomatis, akurat, dan real-time.
+   - **Cara Kerja Alat FRESHGUARD AI**: Pengambilan data sensor pH dan VOC oleh ESP32-S3, inferensi model Machine Learning Random Forest untuk menentukan makanan segar atau basi.
+   - **Database Terkonfigurasi dengan Firebase**: Sinkronisasi data real-time ke cloud dan antarmuka web.
 
 ---
 
@@ -104,25 +106,3 @@ Buka browser pada `http://localhost:3000`.
 npm run build
 npm run start
 ```
-
----
-
-## 🌐 Panduan Deployment ke Vercel
-
-1. Push repositori ini ke GitHub / GitLab.
-2. Buka dashboard [Vercel](https://vercel.com) dan impor repositori.
-3. Masukkan variabel lingkungan dari `.env.example` ke bagian **Environment Variables** di Vercel:
-   - `NEXT_PUBLIC_FIREBASE_API_KEY`
-   - `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN`
-   - `NEXT_PUBLIC_FIREBASE_DATABASE_URL`
-   - `NEXT_PUBLIC_FIREBASE_PROJECT_ID`
-   - `NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET`
-   - `NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID`
-   - `NEXT_PUBLIC_FIREBASE_APP_ID`
-4. Klik **Deploy**. Vercel akan otomatis mengompilasi dan menyediakan URL HTTPS produksi.
-
----
-
-## ⚖️ Penyangkalan (Disclaimer)
-
-Website FRESHGUARD AI menampilkan pembacaan eksperimental dari modul sensor terhubung. Status hasil klasifikasi (seperti *Segar*) bukan merupakan sertifikasi laboratorium pangan atau jaminan mutlak bahwa makanan bebas dari bakteri atau racun patogen. Gunakan selalu prinsip kebersihan dan pengamatan fisik sebelum mengonsumsi makanan.

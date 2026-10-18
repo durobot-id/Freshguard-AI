@@ -316,73 +316,85 @@ export const EDUCATION_ARTICLES: EducationArticle[] = [
   },
   {
     slug: "memahami-hasil-sensor-ph-dan-voc",
-    title: "Memahami Hasil Sensor pH dan VOC",
-    shortDescription: "Penjelasan ilmiah cara kerja parameter pH dan sensor VOC pada perangkat pendeteksi kesegaran makanan serta batasannya.",
+    title: "Memahami Hasil Sensor pH, VOC, dan Alat FRESHGUARD AI",
+    shortDescription: "Pelajari cara kerja alat FRESHGUARD AI berbasis mikrokontroler ESP32-S3, sensor pH & VOC, serta model AI Random Forest dalam mendeteksi kesegaran makanan.",
     readTime: "5 menit baca",
-    category: "Teknologi Sensor",
+    category: "Teknologi & AI",
     imageUrl: "https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?auto=format&fit=crop&w=1200&q=80",
-    imageAlt: "Pengukuran sensor laboratorium dan antarmuka analitik digital",
-    imageCaption: "Sensor fisik memberikan indikasi pembacaan parameter kimiawi di sekitar sampel makanan.",
+    imageAlt: "Pengukuran sensor laboratorium dan pemrosesan komputasi digital",
+    imageCaption: "Alat FRESHGUARD AI memadukan mikrokontroler ESP32-S3, sensor pH dan VOC, serta model AI Random Forest.",
     reviewDate: "19 Oktober 2026",
     summaryPoints: [
-      "Nilai pH mencerminkan tingkat keasaman atau kebasaan yang dapat bergeser selama aktivitas mikroba.",
-      "Sensor VOC mendeteksi konsentrasi gas organik volatil yang teruapkan dari pembusukan bahan pangan.",
-      "Hasil pembacaan sensor adalah indikator teknis klasifikasi perangkat, bukan jaminan mutlak ketiadaan patogen berbahaya.",
+      "Alat FRESHGUARD AI menggunakan mikrokontroler ESP32-S3 untuk membaca data sensor pH dan VOC secara presisi.",
+      "Data pembacaan sensor dimasukkan ke model Machine Learning Random Forest untuk mengklasifikasikan kesegaran makanan (Segar atau Basi).",
+      "Hasil klasifikasi dan nilai pengukuran langsung dikirimkan secara otomatis ke Firebase Realtime Database.",
     ],
     content: {
       intro:
-        "Perangkat FRESHGUARD AI memanfaatkan kombinasi probe pengukur pH dan sensor gas Volatile Organic Compounds (VOC) untuk memantau perubahan kimiawi pada sampel makanan. Memahami arti angka-angka ini membantu Anda menafsirkan data deteksi dengan bijak.",
+        "Perangkat FRESHGUARD AI dirancang khusus untuk mendeteksi pembusukan makanan secara objektif dan otomatis. Dengan memanfaatkan mikrokontroler ESP32-S3, probe sensor pH, sensor gas Volatile Organic Compounds (VOC), dan kecerdasan buatan model Random Forest, alat ini mampu memberikan hasil deteksi kondisi makanan secara real-time.",
       sections: [
         {
-          heading: "1. Apa yang Diukur oleh Nilai pH?",
+          heading: "1. Arsitektur Alat FRESHGUARD AI Berbasis ESP32-S3",
           body: [
-            "pH (potensial Hidrogen) adalah skala logaritmik dari 0 hingga 14 yang menunjukkan keasaman atau kebasaan suatu bahan. Angka 7 bersifat netral, angka di bawah 7 bersifat asam, dan di atas 7 bersifat basa.",
-            "Pada makanan seperti nasi atau susu, fermentasi asam laktat oleh bakteri dapat menurunkan nilai pH (membuatnya lebih asam). Sebaliknya, pada pembusukan daging atau ikan yang kaya protein, pelepasan amonia dan amina dapat menaikkan nilai pH menjadi lebih basa."
-          ]
-        },
-        {
-          heading: "2. Apa itu VOC (Volatile Organic Compounds)?",
-          body: [
-            "VOC adalah senyawa kimia berbasis karbon yang mudah menguap ke udara pada suhu ruangan. Ketika mikroba menguraikan karbohidrat dan protein pada makanan, berbagai gas seperti etanol, aseton, trimetilamina, dan senyawa sulfur dilepaskan.",
-            "Sensor gas logam oksida (MOS) pada perangkat mendeteksi perubahan resistansi listrik saat berinteraksi dengan molekul gas tersebut, lalu menghasilkan nilai numerik konsentrasi VOC."
-          ]
-        },
-        {
-          heading: "3. Faktor yang Mempengaruhi Pembacaan Sensor",
-          body: [
-            "Jenis bahan makanan: Setiap hidangan memiliki matriks kimiawi awal yang berbeda. Misalnya, sayur asam secara alami memiliki pH rendah (3.5 - 4.5) tanpa berarti makanan tersebut rusak.",
-            "Kondisi lingkungan: Suhu ruangan, kelembapan relatif, dan sirkulasi udara dapat mempengaruhi sensitivitas sensor gas VOC.",
-            "Jarak dan posisi probe: Jarak sensor dari permukaan makanan serta waktu kontak mempengaruhi stabilitas angka yang terbaca.",
-            "Kalibrasi perangkat: Drift sensor dari waktu ke waktu membutuhkan kalibrasi berkala agar tetap akurat."
-          ]
-        },
-        {
-          heading: "4. Batasan Kritis: Pembacaan Sensor vs Keamanan Pangan",
-          body: [
-            "Nilai sensor dan label 'Segar' yang dihasilkan adalah hasil inferensi komputasi dari parameter terbatas. Sensor tidak dapat menguji keberadaan spora botulisme, enterotoksin stafilokokus, pestisida, atau virus bawaan pangan.",
-            "Oleh karena itu, jangan pernah menjadikan hasil deteksi sensor sebagai jaminan tunggal bahwa makanan aman untuk dikonsumsi bila penanganan makanan sebelumnya tidak memenuhi standar kebersihan."
+            "Perangkat keras FRESHGUARD AI ditenagai oleh mikrokontroler ESP32-S3 yang memiliki performa komputasi tinggi serta konektivitas nirkabel Wi-Fi yang stabil.",
+            "ESP32-S3 bertugas mengontrol proses akuisisi sinyal analog dari sensor pH dan sensor VOC, melakukan pra-pemrosesan data, serta menjalankan atau menghubungkan data ke inferensi model kecerdasan buatan."
           ],
           callout: {
-            type: "warning",
-            title: "Batasan Penggunaan",
-            message: "Data sensor merupakan alat bantu monitoring eksperimental. Keputusan konsumsi harus selalu memprioritaskan prinsip higienitas pangan dan kehati-hatian."
+            type: "info",
+            title: "Peran ESP32-S3",
+            message: "Mikrokontroler ESP32-S3 memproses pembacaan sensor secara langsung dan mengunggah hasil klasifikasi ke Firebase Realtime Database secara instan."
           }
+        },
+        {
+          heading: "2. Fungsi Sensor pH dalam Pengujian Makanan",
+          body: [
+            "Sensor pH mengukur konsentrasi ion hidrogen untuk menentukan tingkat keasaman atau kebasaan pada sampel makanan.",
+            "Saat makanan mulai membusuk oleh aktivitas bakteri asam laktat atau fermentasi karbohidrat, nilai pH umumnya mengalami penurunan (menjadi lebih asam). Sebaliknya, pada bahan pangan berprotein tinggi seperti daging atau ikan, pelepasan senyawa amina dapat menaikkan nilai pH.",
+            "Perubahan nilai pH ini menjadi salah satu fitur kunci yang diolah oleh model AI untuk mengenali tanda awal dekomposisi."
+          ]
+        },
+        {
+          heading: "3. Fungsi Sensor VOC (Volatile Organic Compounds)",
+          body: [
+            "Sensor gas VOC mendeteksi partikel senyawa organik volatil yang menguap ke udara di sekitar wadah makanan.",
+            "Selama proses pembusukan, mikroorganisme menghasilkan berbagai metabolit gas seperti etanol, aseton, ester, senyawa sulfur, dan amonia. Sensor gas mengubah konsentrasi molekul-molekul gas ini menjadi nilai hambatan listrik yang terbaca sebagai nilai numerik VOC.",
+            "Kombinasi nilai VOC yang meningkat bersamaan dengan pergeseran pH memberikan indikasi kuat mengenai kondisi keutuhan makanan."
+          ]
+        },
+        {
+          heading: "4. Klasifikasi Cerdas dengan Model AI Random Forest",
+          body: [
+            "Data pH dan VOC yang diambil dari sensor tidak hanya dilihat sebagai angka mentah, melainkan dimasukkan ke dalam model kecerdasan buatan Random Forest.",
+            "Random Forest adalah algoritma Machine Learning berbasis ensemble learning yang menggabungkan banyak pohon keputusan (decision trees) untuk menghasilkan prediksi dengan tingkat akurasi tinggi dan ketahanan terhadap noise sensor.",
+            "Model Random Forest memetakan pola hubungan non-linear antara pH, VOC, dan tipe makanan untuk menghasilkan keputusan klasifikasi akhir apakah makanan berstatus 'Segar' atau 'Basi'."
+          ]
+        },
+        {
+          heading: "5. Sinkronisasi Data Otomatis ke Firebase Realtime Database",
+          body: [
+            "Setelah model Random Forest selesai melakukan inferensi, ESP32-S3 langsung mengirimkan paket data yang berisi status label (Segar/Basi), nilai pH, nilai VOC, dan tipe makanan ke Firebase Realtime Database.",
+            "Website FRESHGUARD AI mendeteksi penambahan data ini secara langsung (real-time listener) dan seketika memperbarui tampilan dasbor pengguna tanpa perlu me-refresh halaman."
+          ]
         }
       ],
       practicalTips: [
-        "Lihat tren nilai dalam konteks tipe makanan yang sedang diperiksa, bukan membandingkan angka mutlak antar makanan yang berbeda.",
-        "Pastikan probe sensor bersih dari sisa residu pengujian sebelumnya sebelum melakukan pengukuran baru.",
-        "Gunakan informasi sensor sebagai pelengkap observasi fisik dan catatan durasi penyimpanan makanan."
+        "Pastikan probe sensor dibersihkan dengan air steril dan dikeringkan secara perlahan sebelum pengujian sampel berikutnya.",
+        "Posisikan sensor gas VOC pada jarak yang stabil di atas sampel makanan agar penyerapan uap gas konsisten.",
+        "Perhatikan indikator koneksi di website untuk memastikan perangkat ESP32-S3 dan website terhubung dengan lancar ke Firebase."
       ]
     },
     references: [
       {
-        title: "Application of Electronic Nose and MOS Sensors in Food Freshness Monitoring",
-        organization: "Journal of Food Engineering & Sensors",
+        title: "Random Forest Classifier for Food Freshness Detection Using Electronic Nose",
+        organization: "IEEE Sensors Journal",
       },
       {
-        title: "Standard Operating Procedures for Food Quality Sensor Measurements",
-        organization: "International Organization for Standardization (ISO)",
+        title: "ESP32-S3 Technical Reference and IoT Sensor Integration",
+        organization: "Espressif Systems Documentation",
+      },
+      {
+        title: "Application of pH and Gas Sensors in Smart Food Packaging Systems",
+        organization: "Journal of Food Engineering",
       }
     ],
     relatedSlugs: ["tanda-tanda-makanan-mulai-basi", "mengapa-makanan-bisa-basi"]

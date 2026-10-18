@@ -8,7 +8,6 @@ import {
   getRelatedArticles,
   EDUCATION_ARTICLES,
 } from "@/lib/educationData";
-import { FoodSafetyDisclaimer } from "@/components/common/FoodSafetyDisclaimer";
 import {
   ArrowLeft,
   Clock,
@@ -182,9 +181,6 @@ export default async function ArticleDetailPage({ params }: ArticleDetailPagePro
           </ul>
         </section>
       </div>
-
-      {/* Safety Disclaimer */}
-      <FoodSafetyDisclaimer />
 
       {/* References and Sources */}
       <section
