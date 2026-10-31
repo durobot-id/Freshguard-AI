@@ -139,7 +139,7 @@ export default async function ArticleDetailPage({ params }: ArticleDetailPagePro
                 Visualisasi Komponen Perangkat Keras
               </h2>
               <p className="text-xs text-brand-muted">
-                Sensor pH, sensor gas VOC MS1100, mikrokontroler ESP32-S3, dan slot unit alat FRESHGUARD AI
+                Sensor pH, sensor gas VOC MS1100, sensor gas Sulfur (H₂S), mikrokontroler ESP32-S3, dan unit alat FRESHGUARD AI
               </p>
             </div>
           </div>

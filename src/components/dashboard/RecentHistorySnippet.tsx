@@ -101,7 +101,7 @@ export const RecentHistorySnippet: React.FC<RecentHistorySnippetProps> = ({
               </div>
 
               <div className="flex items-center justify-between sm:justify-end gap-4 border-t sm:border-t-0 pt-2 sm:pt-0 border-brand-border/40 text-xs">
-                <div className="flex items-center gap-3">
+                <div className="flex flex-wrap items-center gap-3">
                   <span className="text-brand-muted">
                     pH:{" "}
                     <strong className="text-brand-text font-semibold">
@@ -112,6 +112,12 @@ export const RecentHistorySnippet: React.FC<RecentHistorySnippetProps> = ({
                     VOC:{" "}
                     <strong className="text-brand-text font-semibold">
                       {item.voc !== null ? item.voc : "—"}
+                    </strong>
+                  </span>
+                  <span className="text-brand-muted">
+                    Sulfur:{" "}
+                    <strong className="text-amber-700 font-semibold">
+                      {item.sulfur !== null ? item.sulfur : "—"}
                     </strong>
                   </span>
                 </div>

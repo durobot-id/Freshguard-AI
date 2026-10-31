@@ -28,12 +28,14 @@ const FALLBACK_SEED_DATA: Record<string, RawDetectionRecord> = {
   "191020261340": {
     Label: "Segar",
     PH: 7.0,
+    Sulfur: 50,
     Tipe_makanan: "Nasi",
     VOC: 60,
   },
   "191020261230": {
     Label: "Segar",
     PH: 6.8,
+    Sulfur: 30,
     Tipe_makanan: "Nasi",
     VOC: 20,
   },
@@ -49,6 +51,15 @@ function parseRawRecord(key: string, raw: RawDetectionRecord | null | undefined)
   } else if (typeof raw?.PH === "string") {
     const parsed = parseFloat(raw.PH);
     if (Number.isFinite(parsed)) phVal = parsed;
+  }
+
+  // Validate Sulfur
+  let sulfurVal: number | null = null;
+  if (typeof raw?.Sulfur === "number" && Number.isFinite(raw.Sulfur)) {
+    sulfurVal = raw.Sulfur;
+  } else if (typeof raw?.Sulfur === "string") {
+    const parsed = parseFloat(raw.Sulfur);
+    if (Number.isFinite(parsed)) sulfurVal = parsed;
   }
 
   // Validate VOC
@@ -73,6 +84,7 @@ function parseRawRecord(key: string, raw: RawDetectionRecord | null | undefined)
     id: key,
     label: labelVal,
     ph: phVal,
+    sulfur: sulfurVal,
     foodType: foodTypeVal,
     voc: vocVal,
     timestamp: dateInfo.timestamp,

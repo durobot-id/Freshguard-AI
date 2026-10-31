@@ -1,6 +1,6 @@
 "use client";
 
-import React, { use } from "react";
+import React, { use, useState } from "react";
 import Link from "next/link";
 import { useDetections } from "@/context/DetectionContext";
 import { parseRecordKey } from "@/lib/dateUtils";
@@ -10,9 +10,14 @@ import {
   Utensils,
   Activity,
   Gauge,
+  Flame,
   Hash,
   Clock,
+  FileText,
+  Download,
 } from "lucide-react";
+import { ReportModal } from "@/components/report/ReportModal";
+import { downloadDetectionPdf } from "@/lib/pdfReportGenerator";
 
 interface RecordDetailPageProps {
   params: Promise<{ id: string }>;
@@ -22,6 +27,7 @@ export default function RecordDetailPage({ params }: RecordDetailPageProps) {
   const resolvedParams = use(params);
   const { id } = resolvedParams;
   const { getRecordById, isLoading } = useDetections();
+  const [showReport, setShowReport] = useState(false);
 
   const record = getRecordById(id);
 
@@ -42,6 +48,7 @@ export default function RecordDetailPage({ params }: RecordDetailPageProps) {
     id,
     label: "—",
     ph: null,
+    sulfur: null,
     foodType: "—",
     voc: null,
     timestamp: fallbackDateInfo.timestamp,
@@ -61,109 +68,182 @@ export default function RecordDetailPage({ params }: RecordDetailPageProps) {
     labelBg = "bg-amber-50 text-amber-800 border-amber-200";
 
   return (
-    <div className="max-w-3xl mx-auto space-y-6">
-      {/* Back button */}
-      <div>
-        <Link
-          href="/riwayat"
-          className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-brand-dark hover:text-brand-text min-h-[44px] px-3 py-2 rounded-xl bg-white border border-brand-border hover:bg-brand-bg transition-colors"
+    <>
+      <div className="max-w-3xl mx-auto space-y-6">
+        {/* Navigation & Action Bar */}
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <Link
+            href="/riwayat"
+            className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-brand-dark hover:text-brand-text min-h-[44px] px-3 py-2 rounded-xl bg-white border border-brand-border hover:bg-brand-bg transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" aria-hidden="true" />
+            <span>Kembali ke Riwayat</span>
+          </Link>
+
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setShowReport(true)}
+              className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-white border border-brand-border text-xs sm:text-sm font-bold text-brand-dark hover:bg-brand-pale hover:border-brand-primary/40 transition-colors shadow-2xs min-h-[44px]"
+            >
+              <FileText className="w-4 h-4" aria-hidden="true" />
+              <span>Lihat Laporan</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => downloadDetectionPdf(displayRecord)}
+              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-brand-dark text-white text-xs sm:text-sm font-bold hover:bg-brand-text transition-colors shadow-2xs min-h-[44px]"
+            >
+              <Download className="w-4 h-4" aria-hidden="true" />
+              <span>Download PDF</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Main Detail Card */}
+        <article
+          aria-labelledby="record-title"
+          className="bg-white rounded-3xl p-6 sm:p-8 border border-brand-border shadow-card space-y-6"
         >
-          <ArrowLeft className="w-4 h-4" aria-hidden="true" />
-          <span>Kembali ke Riwayat</span>
-        </Link>
+          {/* Header */}
+          <div className="border-b border-brand-border pb-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2 text-xs text-brand-muted">
+                <Clock className="w-3.5 h-3.5 text-brand-dark" aria-hidden="true" />
+                <span>Detail Catatan Uji Sensor</span>
+              </div>
+              <h1 id="record-title" className="text-2xl sm:text-3xl font-extrabold text-brand-text">
+                {displayRecord.foodType}
+              </h1>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <span
+                className={`inline-flex items-center px-4 py-1.5 rounded-2xl text-lg sm:text-xl font-black border ${labelBg}`}
+              >
+                {displayRecord.label}
+              </span>
+            </div>
+          </div>
+
+          {/* Timestamp combined row */}
+          <div className="p-4 rounded-2xl bg-brand-bg border border-brand-border flex items-center justify-between flex-wrap gap-2 text-xs sm:text-sm">
+            <span className="text-brand-muted font-medium">Waktu Deteksi:</span>
+            <div className="inline-flex items-center gap-2 font-bold text-brand-text">
+              <Calendar className="w-4 h-4 text-brand-dark" aria-hidden="true" />
+              <time>{displayRecord.formattedDateTime}</time>
+            </div>
+          </div>
+
+          {/* Measurements Grid (pH, VOC, Sulfur) */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {/* pH */}
+            <div className="p-5 rounded-2xl bg-white border border-brand-border shadow-subtle space-y-2">
+              <div className="flex items-center justify-between text-xs font-semibold text-brand-muted">
+                <span>Tingkat Keasaman (pH)</span>
+                <Activity className="w-4 h-4 text-brand-dark" aria-hidden="true" />
+              </div>
+              <div className="text-3xl font-black text-brand-text">
+                {displayRecord.ph !== null ? displayRecord.ph.toFixed(1) : "—"}
+              </div>
+              <p className="text-xs text-brand-muted leading-relaxed">
+                {displayRecord.ph !== null
+                  ? displayRecord.ph < 7
+                    ? "Parameter menunjukkan sifat asam pada sampel makanan."
+                    : displayRecord.ph > 7
+                    ? "Parameter menunjukkan sifat basa pada sampel makanan."
+                    : "Parameter berada pada nilai netral."
+                  : "Nilai pH tidak tersedia atau tidak terdefinisi."}
+              </p>
+            </div>
+
+            {/* VOC */}
+            <div className="p-5 rounded-2xl bg-white border border-brand-border shadow-subtle space-y-2">
+              <div className="flex items-center justify-between text-xs font-semibold text-brand-muted">
+                <span>Senyawa Volatil (VOC)</span>
+                <Gauge className="w-4 h-4 text-brand-dark" aria-hidden="true" />
+              </div>
+              <div className="text-3xl font-black text-brand-text">
+                {displayRecord.voc !== null ? displayRecord.voc : "—"}
+              </div>
+              <p className="text-xs text-brand-muted leading-relaxed">
+                {displayRecord.voc !== null
+                  ? "Nilai pembacaan mentah dari sensor gas MS1100 pendeteksi penguapan organik."
+                  : "Nilai VOC tidak tersedia atau tidak terdefinisi."}
+              </p>
+            </div>
+
+            {/* Sulfur (NEW) */}
+            <div className="p-5 rounded-2xl bg-white border border-brand-border shadow-subtle space-y-2">
+              <div className="flex items-center justify-between text-xs font-semibold text-brand-muted">
+                <span>Gas Sulfur (H₂S)</span>
+                <Flame className="w-4 h-4 text-amber-600" aria-hidden="true" />
+              </div>
+              <div className="text-3xl font-black text-brand-text">
+                {displayRecord.sulfur !== null ? displayRecord.sulfur : "—"}
+              </div>
+              <p className="text-xs text-brand-muted leading-relaxed">
+                {displayRecord.sulfur !== null
+                  ? "Kadar gas belerang hasil dekomposisi protein mikroba pembusuk."
+                  : "Nilai Sulfur tidak tersedia atau tidak terdefinisi."}
+              </p>
+            </div>
+          </div>
+
+          {/* Technical Metadata Box */}
+          <div className="p-4 rounded-2xl bg-gray-50 border border-gray-200 text-xs space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="font-semibold text-gray-700 flex items-center gap-1.5">
+                <Hash className="w-3.5 h-3.5 text-gray-500" aria-hidden="true" />
+                <span>Firebase Key (Record ID):</span>
+              </span>
+              <span className="font-mono font-bold text-gray-900">{displayRecord.id}</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-gray-600">Validitas Pola Key:</span>
+              <span className="font-medium text-gray-800">
+                {displayRecord.isTimestampValid ? "Format valid (ddMMyyyyHHmm)" : "Format tidak sesuai pola"}
+              </span>
+            </div>
+          </div>
+
+          {/* Report CTA Box */}
+          <div className="p-5 rounded-2xl bg-brand-pale/70 border border-brand-primary/40 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <h4 className="font-bold text-sm sm:text-base text-brand-dark">
+                Laporan Hasil Pengujian FRESHGUARD AI
+              </h4>
+              <p className="text-xs text-brand-muted">
+                Lihat format dokumen resmi atau unduh berkas laporan dalam format PDF.
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setShowReport(true)}
+                className="px-3.5 py-2 rounded-xl bg-white border border-brand-border text-xs font-bold text-brand-dark hover:bg-brand-pale transition-colors shadow-2xs"
+              >
+                Lihat Laporan
+              </button>
+              <button
+                type="button"
+                onClick={() => downloadDetectionPdf(displayRecord)}
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-brand-dark text-white text-xs font-bold hover:bg-brand-text transition-colors shadow-xs"
+              >
+                <Download className="w-3.5 h-3.5" aria-hidden="true" />
+                <span>Download PDF</span>
+              </button>
+            </div>
+          </div>
+        </article>
       </div>
 
-      {/* Main Detail Card */}
-      <article
-        aria-labelledby="record-title"
-        className="bg-white rounded-3xl p-6 sm:p-8 border border-brand-border shadow-card space-y-6"
-      >
-        {/* Header */}
-        <div className="border-b border-brand-border pb-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="space-y-1">
-            <div className="flex items-center gap-2 text-xs text-brand-muted">
-              <Clock className="w-3.5 h-3.5 text-brand-dark" aria-hidden="true" />
-              <span>Detail Catatan Uji Sensor</span>
-            </div>
-            <h1 id="record-title" className="text-2xl sm:text-3xl font-extrabold text-brand-text">
-              {displayRecord.foodType}
-            </h1>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <span
-              className={`inline-flex items-center px-4 py-1.5 rounded-2xl text-lg sm:text-xl font-black border ${labelBg}`}
-            >
-              {displayRecord.label}
-            </span>
-          </div>
-        </div>
-
-        {/* Timestamp combined row */}
-        <div className="p-4 rounded-2xl bg-brand-bg border border-brand-border flex items-center justify-between flex-wrap gap-2 text-xs sm:text-sm">
-          <span className="text-brand-muted font-medium">Waktu Deteksi:</span>
-          <div className="inline-flex items-center gap-2 font-bold text-brand-text">
-            <Calendar className="w-4 h-4 text-brand-dark" aria-hidden="true" />
-            <time>{displayRecord.formattedDateTime}</time>
-          </div>
-        </div>
-
-        {/* Measurements Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {/* pH */}
-          <div className="p-5 rounded-2xl bg-white border border-brand-border shadow-subtle space-y-2">
-            <div className="flex items-center justify-between text-xs font-semibold text-brand-muted">
-              <span>Tingkat Keasaman (pH)</span>
-              <Activity className="w-4 h-4 text-brand-dark" aria-hidden="true" />
-            </div>
-            <div className="text-3xl font-black text-brand-text">
-              {displayRecord.ph !== null ? displayRecord.ph.toFixed(1) : "—"}
-            </div>
-            <p className="text-xs text-brand-muted leading-relaxed">
-              {displayRecord.ph !== null
-                ? displayRecord.ph < 7
-                  ? "Parameter menunjukkan sifat asam pada sampel makanan."
-                  : displayRecord.ph > 7
-                  ? "Parameter menunjukkan sifat basa pada sampel makanan."
-                  : "Parameter berada pada nilai netral."
-                : "Nilai pH tidak tersedia atau tidak terdefinisi."}
-            </p>
-          </div>
-
-          {/* VOC */}
-          <div className="p-5 rounded-2xl bg-white border border-brand-border shadow-subtle space-y-2">
-            <div className="flex items-center justify-between text-xs font-semibold text-brand-muted">
-              <span>Senyawa Volatil (VOC)</span>
-              <Gauge className="w-4 h-4 text-brand-dark" aria-hidden="true" />
-            </div>
-            <div className="text-3xl font-black text-brand-text">
-              {displayRecord.voc !== null ? displayRecord.voc : "—"}
-            </div>
-            <p className="text-xs text-brand-muted leading-relaxed">
-              {displayRecord.voc !== null
-                ? "Nilai pembacaan mentah dari sensor gas pendeteksi penguapan organik."
-                : "Nilai VOC tidak tersedia atau tidak terdefinisi."}
-            </p>
-          </div>
-        </div>
-
-        {/* Technical Metadata Box */}
-        <div className="p-4 rounded-2xl bg-gray-50 border border-gray-200 text-xs space-y-2">
-          <div className="flex items-center justify-between">
-            <span className="font-semibold text-gray-700 flex items-center gap-1.5">
-              <Hash className="w-3.5 h-3.5 text-gray-500" aria-hidden="true" />
-              <span>Firebase Key (Record ID):</span>
-            </span>
-            <span className="font-mono font-bold text-gray-900">{displayRecord.id}</span>
-          </div>
-          <div className="flex items-center justify-between">
-            <span className="text-gray-600">Validitas Pola Key:</span>
-            <span className="font-medium text-gray-800">
-              {displayRecord.isTimestampValid ? "Format valid (ddMMyyyyHHmm)" : "Format tidak sesuai pola"}
-            </span>
-          </div>
-        </div>
-      </article>
-    </div>
+      <ReportModal
+        record={displayRecord}
+        isOpen={showReport}
+        onClose={() => setShowReport(false)}
+      />
+    </>
   );
 }

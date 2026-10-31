@@ -10,9 +10,10 @@
 
 - **Platform**: Web Responsif Mobile-First (dioptimalkan untuk ponsel mulai lebar 320px, tablet, dan desktop)
 - **Mikrokontroler Hardware**: ESP32-S3
-- **Sensor**: Sensor pH & Sensor Gas VOC (Volatile Organic Compounds)
+- **Sensor**: Sensor pH, Sensor Gas VOC (MS1100), dan Sensor Gas Sulfur (H₂S)
 - **Model Kecerdasan Buatan**: Random Forest (Klasifikasi Segar / Basi)
 - **Database**: Database Terkonfigurasi dengan Firebase (Firebase Realtime Database)
+- **Laporan Dokumen**: Fitur Preview & Download Laporan Pengujian PDF Otomatis
 - **Hosting**: Vercel Ready
 - **Bahasa Antarmuka**: Bahasa Indonesia
 

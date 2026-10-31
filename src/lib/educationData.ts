@@ -324,23 +324,24 @@ export const EDUCATION_ARTICLES: EducationArticle[] = [
   },
   {
     slug: "memahami-hasil-sensor-ph-dan-voc",
-    title: "Memahami Hasil Sensor pH, VOC, dan Alat FRESHGUARD AI",
-    shortDescription: "Pelajari cara kerja alat FRESHGUARD AI berbasis mikrokontroler ESP32-S3, sensor pH & VOC, serta model AI Random Forest dalam mendeteksi kesegaran makanan.",
-    readTime: "5 menit baca",
+    title: "Memahami Hasil Sensor pH, VOC, Sulfur, dan Alat FRESHGUARD AI",
+    shortDescription: "Pelajari cara kerja alat FRESHGUARD AI berbasis mikrokontroler ESP32-S3, sensor pH, VOC MS1100, dan sensor Sulfur dalam mendeteksi tingkat basi makanan melalui model AI Random Forest.",
+    readTime: "6 menit baca",
     category: "Teknologi & AI",
     imageUrl: "/images/alat-freshguard-ai.png",
-    imageAlt: "Perangkat cerdas FRESHGUARD AI dengan ESP32-S3, sensor pH, dan sensor gas VOC MS1100",
-    imageCaption: "Alat FRESHGUARD AI memadukan mikrokontroler ESP32-S3, sensor pH, sensor VOC MS1100, serta model AI Random Forest.",
-    reviewDate: "19 Oktober 2026",
+    imageAlt: "Perangkat cerdas FRESHGUARD AI dengan ESP32-S3, sensor pH, sensor gas VOC MS1100, dan sensor Sulfur",
+    imageCaption: "Alat FRESHGUARD AI memadukan mikrokontroler ESP32-S3, sensor pH, sensor VOC MS1100, sensor Sulfur, serta model AI Random Forest.",
+    reviewDate: "1 November 2026",
     summaryPoints: [
-      "Alat FRESHGUARD AI menggunakan mikrokontroler ESP32-S3 untuk membaca data sensor pH dan VOC MS1100 secara presisi.",
+      "Alat FRESHGUARD AI menggunakan mikrokontroler ESP32-S3 untuk membaca data sensor pH, gas VOC MS1100, dan sensor Sulfur secara simultan.",
+      "Gas Sulfur (H2S) merupakan biomarker pembusukan paling sensitif akibat dekomposisi asam amino dan protein oleh bakteri pembusuk.",
       "Data pembacaan sensor dimasukkan ke model Machine Learning Random Forest untuk mengklasifikasikan kesegaran makanan (Segar atau Basi).",
-      "Hasil klasifikasi dan nilai pengukuran langsung dikirimkan secara otomatis ke Firebase Realtime Database.",
+      "Hasil deteksi dapat dilihat secara real-time dan diunduh dalam bentuk dokumen Laporan PDF resmi.",
     ],
     hardwareGallery: [
       {
         title: "Alat FRESHGUARD AI (Slot Perangkat)",
-        desc: "Unit pemantau utama yang mengintegrasikan mikrokontroler ESP32-S3, probe sensor pH, dan sensor gas VOC MS1100. Letakkan foto perangkat asli Anda di 'public/images/alat-freshguard-ai.jpg' untuk menampilkannya secara langsung.",
+        desc: "Unit pemantau utama yang mengintegrasikan mikrokontroler ESP32-S3, probe sensor pH, sensor gas VOC MS1100, dan sensor gas Sulfur. Letakkan foto perangkat asli Anda di 'public/images/alat-freshguard-ai.jpg' untuk menampilkannya secara langsung.",
         imageUrl: "/images/alat-freshguard-ai.png",
         alt: "Unit Perangkat Keras FRESHGUARD AI",
         badge: "Perangkat Utama",
@@ -361,6 +362,13 @@ export const EDUCATION_ARTICLES: EducationArticle[] = [
         badge: "Sensor Gas",
       },
       {
+        title: "Sensor Gas Sulfur (H2S)",
+        desc: "Modul sensor gas sulfur pendeteksi gas hidrogen sulfida dan senyawa belerang volatil hasil perombakan asam amino bersulfur oleh mikroorganisme pembusuk makanan.",
+        imageUrl: "/images/sensor-sulfur.svg",
+        alt: "Modul Sensor Gas Sulfur H2S Pembusukan Makanan",
+        badge: "Sensor Gas Sulfur",
+      },
+      {
         title: "Mikrokontroler ESP32-S3",
         desc: "Foto asli papan mikrokontroler ESP32-S3 dengan prosesor Xtensa 32-bit Dual-Core dan modul Wi-Fi yang memproses data inferensi Random Forest dan menyinkronkannya ke Firebase.",
         imageUrl: "/images/esp32-s3.jpg",
@@ -370,18 +378,18 @@ export const EDUCATION_ARTICLES: EducationArticle[] = [
     ],
     content: {
       intro:
-        "Perangkat FRESHGUARD AI dirancang khusus untuk mendeteksi pembusukan makanan secara objektif dan otomatis. Dengan memanfaatkan mikrokontroler ESP32-S3, probe sensor pH, sensor gas Volatile Organic Compounds (VOC), dan kecerdasan buatan model Random Forest, alat ini mampu memberikan hasil deteksi kondisi makanan secara real-time.",
+        "Perangkat FRESHGUARD AI dirancang khusus untuk mendeteksi pembusukan makanan secara objektif dan otomatis. Dengan memanfaatkan mikrokontroler ESP32-S3, probe sensor pH, sensor gas Volatile Organic Compounds (VOC MS1100), sensor gas Sulfur (H2S), dan kecerdasan buatan model Random Forest, alat ini mampu memberikan hasil deteksi kondisi makanan secara real-time.",
       sections: [
         {
           heading: "1. Arsitektur Alat FRESHGUARD AI Berbasis ESP32-S3",
           body: [
             "Perangkat keras FRESHGUARD AI ditenagai oleh mikrokontroler ESP32-S3 yang memiliki performa komputasi tinggi serta konektivitas nirkabel Wi-Fi yang stabil.",
-            "ESP32-S3 bertugas mengontrol proses akuisisi sinyal analog dari sensor pH dan sensor VOC, melakukan pra-pemrosesan data, serta menjalankan atau menghubungkan data ke inferensi model kecerdasan buatan."
+            "ESP32-S3 bertugas mengontrol proses akuisisi sinyal analog dari sensor pH, sensor VOC, dan sensor Sulfur, melakukan pra-pemrosesan data, serta menjalankan atau menghubungkan data ke inferensi model kecerdasan buatan."
           ],
           callout: {
             type: "info",
             title: "Peran ESP32-S3",
-            message: "Mikrokontroler ESP32-S3 memproses pembacaan sensor secara langsung dan mengunggah hasil klasifikasi ke Firebase Realtime Database secara instan."
+            message: "Mikrokontroler ESP32-S3 memproses pembacaan tiga sensor secara langsung dan mengunggah hasil klasifikasi ke Firebase Realtime Database secara instan."
           }
         },
         {
@@ -393,33 +401,46 @@ export const EDUCATION_ARTICLES: EducationArticle[] = [
           ]
         },
         {
-          heading: "3. Fungsi Sensor VOC (Volatile Organic Compounds)",
+          heading: "3. Fungsi Sensor VOC (Volatile Organic Compounds MS1100)",
           body: [
-            "Sensor gas VOC mendeteksi partikel senyawa organik volatil yang menguap ke udara di sekitar wadah makanan.",
-            "Selama proses pembusukan, mikroorganisme menghasilkan berbagai metabolit gas seperti etanol, aseton, ester, senyawa sulfur, dan amonia. Sensor gas mengubah konsentrasi molekul-molekul gas ini menjadi nilai hambatan listrik yang terbaca sebagai nilai numerik VOC.",
-            "Kombinasi nilai VOC yang meningkat bersamaan dengan pergeseran pH memberikan indikasi kuat mengenai kondisi keutuhan makanan."
+            "Sensor gas VOC MS1100 mendeteksi partikel senyawa organik volatil yang menguap ke udara di sekitar wadah makanan.",
+            "Selama proses pembusukan, mikroorganisme menghasilkan berbagai metabolit gas seperti etanol, aseton, ester, senyawa amina, dan aldehida. Sensor gas mengubah konsentrasi molekul-molekul gas ini menjadi nilai hambatan listrik yang terbaca sebagai nilai numerik VOC.",
+            "Kombinasi nilai VOC yang meningkat bersamaan dengan pergeseran pH memberikan indikasi kuat mengenai penurunan kesegaran bahan pangan."
           ]
         },
         {
-          heading: "4. Klasifikasi Cerdas dengan Model AI Random Forest",
+          heading: "4. Peran Kritis Sensor Sulfur dalam Menentukan Tingkat Basi Makanan",
           body: [
-            "Data pH dan VOC yang diambil dari sensor tidak hanya dilihat sebagai angka mentah, melainkan dimasukkan ke dalam model kecerdasan buatan Random Forest.",
-            "Random Forest adalah algoritma Machine Learning berbasis ensemble learning yang menggabungkan banyak pohon keputusan (decision trees) untuk menghasilkan prediksi dengan tingkat akurasi tinggi dan ketahanan terhadap noise sensor.",
-            "Model Random Forest memetakan pola hubungan non-linear antara pH, VOC, dan tipe makanan untuk menghasilkan keputusan klasifikasi akhir apakah makanan berstatus 'Segar' atau 'Basi'."
+            "Gas sulfur, khususnya hidrogen sulfida (H2S) dan senyawa tiol/merkaptan, merupakan produk sampingan utama dari perombakan asam amino bersulfur (seperti metionin dan sistein) oleh bakteri pembusuk (misalnya Proteus, Pseudomonas, dan Salmonella).",
+            "Pelepasan gas sulfur bertanggung jawab langsung atas timbulnya bau busuk menyengat khas makanan basi. Karena bakteri pembusuk aktif menghasilkan sulfur seiring berkembang biaknya koloni kuman, kadar sulfur menjadi biomarker paling sensitif untuk menilai apakah makanan telah melampaui batas aman konsumsi.",
+            "Dengan memasukkan nilai Sulfur ke dalam input model, FRESHGUARD AI dapat membedakan fermentasi wajar dengan pembusukan berbahaya secara jauh lebih presisi."
+          ],
+          callout: {
+            type: "warning",
+            title: "Indikator Utama Pembusukan",
+            message: "Lonjakan kadar gas Sulfur merupakan sinyal biologis kuat bahwa dekomposisi protein telah berlangsung aktif dan makanan tidak lagi segar."
+          }
+        },
+        {
+          heading: "5. Klasifikasi Cerdas dengan Model AI Random Forest",
+          body: [
+            "Data gabungan pH, VOC, dan Sulfur yang diambil dari sensor tidak hanya dilihat secara terpisah, melainkan dipetakan ke dalam model Machine Learning Random Forest.",
+            "Random Forest adalah algoritma berbasis ensemble learning yang menggabungkan banyak decision trees untuk menghasilkan prediksi dengan akurasi tinggi dan ketahanan terhadap fluktuasi sensor.",
+            "Model Random Forest menganalisis interaksi multivariat antara pH, VOC, Sulfur, dan tipe makanan untuk menghasilkan keputusan klasifikasi akhir: 'Segar' atau 'Basi'."
           ]
         },
         {
-          heading: "5. Sinkronisasi Data Otomatis ke Firebase Realtime Database",
+          heading: "6. Sinkronisasi Cloud Firebase & Ekspor Laporan PDF",
           body: [
-            "Setelah model Random Forest selesai melakukan inferensi, ESP32-S3 langsung mengirimkan paket data yang berisi status label (Segar/Basi), nilai pH, nilai VOC, dan tipe makanan ke Firebase Realtime Database.",
-            "Website FRESHGUARD AI mendeteksi penambahan data ini secara langsung (real-time listener) dan seketika memperbarui tampilan dasbor pengguna tanpa perlu me-refresh halaman."
+            "Setelah model Random Forest selesai melakukan inferensi, ESP32-S3 langsung mengirimkan paket data lengkap (Label, PH, Sulfur, Tipe_makanan, VOC) ke Firebase Realtime Database.",
+            "Website FRESHGUARD AI seketika memperbarui dasbor pemantauan tanpa refresh halaman, dan pengguna dapat langsung meninjau serta mendownload Laporan Hasil Pengujian resmi dalam format PDF berstandar."
           ]
         }
       ],
       practicalTips: [
-        "Pastikan probe sensor dibersihkan dengan air steril dan dikeringkan secara perlahan sebelum pengujian sampel berikutnya.",
-        "Posisikan sensor gas VOC pada jarak yang stabil di atas sampel makanan agar penyerapan uap gas konsisten.",
-        "Perhatikan indikator koneksi di website untuk memastikan perangkat ESP32-S3 dan website terhubung dengan lancar ke Firebase."
+        "Pastikan probe sensor pH dibilas bersih dan dikeringkan secara hati-hati sebelum menguji sampel baru.",
+        "Berikan jeda beberapa detik saat mengarahkan sensor gas VOC dan Sulfur di atas sampel agar uap gas mencapai keseimbangan konsentrasi.",
+        "Gunakan fitur Laporan PDF untuk menyimpan dokumentasi riwayat pengujian makanan Anda secara rapi."
       ]
     },
     references: [

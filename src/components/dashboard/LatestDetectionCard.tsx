@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { DetectionRecord, ConnectionStatus } from "@/types/detection";
 import {
@@ -8,12 +8,17 @@ import {
   Utensils,
   Activity,
   Gauge,
+  Flame,
   Sparkles,
   ChevronRight,
   AlertCircle,
   HelpCircle,
   Info,
+  FileText,
+  Download,
 } from "lucide-react";
+import { ReportModal } from "@/components/report/ReportModal";
+import { downloadDetectionPdf } from "@/lib/pdfReportGenerator";
 
 interface LatestDetectionCardProps {
   record: DetectionRecord | null;
@@ -27,6 +32,7 @@ export const LatestDetectionCard: React.FC<LatestDetectionCardProps> = ({
   status,
   isLoading,
 }) => {
+  const [showReportModal, setShowReportModal] = useState(false);
   // Skeleton loading state
   if (isLoading) {
     return (
@@ -85,137 +91,196 @@ export const LatestDetectionCard: React.FC<LatestDetectionCardProps> = ({
   const isDisconnected = status === "disconnected";
 
   return (
-    <section
-      aria-labelledby="latest-detection-heading"
-      className="relative w-full bg-gradient-to-br from-white via-white to-brand-pale/30 rounded-3xl p-6 sm:p-8 border border-brand-border/80 shadow-prominent overflow-hidden transition-all"
-    >
-      {/* Top Banner if connection is lost */}
-      {isDisconnected && (
-        <div className="mb-5 -mt-2 -mx-2 px-4 py-2.5 rounded-2xl bg-red-50 border border-red-200 flex items-center gap-2.5 text-xs text-red-800">
-          <AlertCircle className="w-4 h-4 shrink-0 text-red-600" aria-hidden="true" />
-          <p className="font-medium">
-            Koneksi database terputus. Data di bawah merupakan catatan terakhir yang berhasil
-            diterima dan mungkin belum diperbarui.
-          </p>
-        </div>
-      )}
+    <>
+      <section
+        aria-labelledby="latest-detection-heading"
+        className="relative w-full bg-gradient-to-br from-white via-white to-brand-pale/30 rounded-3xl p-6 sm:p-8 border border-brand-border/80 shadow-prominent overflow-hidden transition-all"
+      >
+        {/* Top Banner if connection is lost */}
+        {isDisconnected && (
+          <div className="mb-5 -mt-2 -mx-2 px-4 py-2.5 rounded-2xl bg-red-50 border border-red-200 flex items-center gap-2.5 text-xs text-red-800">
+            <AlertCircle className="w-4 h-4 shrink-0 text-red-600" aria-hidden="true" />
+            <p className="font-medium">
+              Koneksi database terputus. Data di bawah merupakan catatan terakhir yang berhasil
+              diterima dan mungkin belum diperbarui.
+            </p>
+          </div>
+        )}
 
-      {/* Header Row: "Data Terbaru" Badge + Date/Time */}
-      <div className="flex flex-wrap items-center justify-between gap-3 mb-6 pb-4 border-b border-brand-border/60">
-        <div className="flex items-center gap-2">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-brand-dark text-white shadow-xs">
-            <Sparkles className="w-3.5 h-3.5 text-brand-primary" aria-hidden="true" />
-            <span>Data Terbaru</span>
-          </span>
-          <span className="text-xs text-brand-muted hidden sm:inline">• Realtime update</span>
+        {/* Header Row: "Data Terbaru" Badge + Date/Time + Action Buttons */}
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-6 pb-4 border-b border-brand-border/60">
+          <div className="flex items-center gap-2">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-brand-dark text-white shadow-xs">
+              <Sparkles className="w-3.5 h-3.5 text-brand-primary" aria-hidden="true" />
+              <span>Data Terbaru</span>
+            </span>
+            <span className="text-xs text-brand-muted hidden sm:inline">• Realtime update</span>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2">
+            {/* Combined Date & Time Element */}
+            <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-brand-text bg-brand-bg px-3.5 py-1.5 rounded-xl border border-brand-border">
+              <Calendar className="w-4 h-4 text-brand-dark shrink-0" aria-hidden="true" />
+              <time dateTime={record.timestamp ? new Date(record.timestamp).toISOString() : undefined}>
+                {record.formattedDateTime}
+              </time>
+            </div>
+
+            {/* Quick Report Actions */}
+            <button
+              type="button"
+              onClick={() => setShowReportModal(true)}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-brand-border text-xs font-bold text-brand-dark hover:bg-brand-pale hover:border-brand-primary/40 transition-colors shadow-2xs"
+              title="Lihat Laporan Hasil Deteksi"
+            >
+              <FileText className="w-3.5 h-3.5" aria-hidden="true" />
+              <span className="hidden sm:inline">Lihat Laporan</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => downloadDetectionPdf(record)}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-brand-dark text-white text-xs font-bold hover:bg-brand-text transition-colors shadow-2xs"
+              title="Download Laporan PDF"
+            >
+              <Download className="w-3.5 h-3.5" aria-hidden="true" />
+              <span className="hidden sm:inline">Download PDF</span>
+            </button>
+          </div>
         </div>
 
-        {/* Combined Date & Time Element */}
-        <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-brand-text bg-brand-bg px-3.5 py-1.5 rounded-xl border border-brand-border">
-          <Calendar className="w-4 h-4 text-brand-dark shrink-0" aria-hidden="true" />
-          <time dateTime={record.timestamp ? new Date(record.timestamp).toISOString() : undefined}>
-            {record.formattedDateTime}
-          </time>
-        </div>
-      </div>
+        {/* Primary Highlights: Label & Food Type */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+          <div>
+            <span className="text-xs font-semibold uppercase tracking-wider text-brand-muted block mb-1">
+              Status Hasil Deteksi
+            </span>
+            <div className="flex items-center gap-3">
+              <span
+                className={`inline-flex items-center px-4 py-2 rounded-2xl text-xl sm:text-2xl font-black border ${labelBadgeClass} shadow-xs`}
+              >
+                {record.label}
+              </span>
+              <span className="text-xs text-brand-muted max-w-[200px] leading-tight hidden lg:inline">
+                Klasifikasi model AI Random Forest via ESP32-S3
+              </span>
+            </div>
+          </div>
 
-      {/* Primary Highlights: Label & Food Type */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
-        <div>
-          <span className="text-xs font-semibold uppercase tracking-wider text-brand-muted block mb-1">
-            Status Hasil Deteksi
+          <div className="sm:text-right">
+            <span className="text-xs font-semibold uppercase tracking-wider text-brand-muted block mb-1">
+              Tipe Makanan
+            </span>
+            <div className="inline-flex items-center gap-2 text-base sm:text-lg font-bold text-brand-text bg-white px-4 py-2 rounded-2xl border border-brand-border shadow-xs">
+              <Utensils className="w-4 h-4 text-brand-dark" aria-hidden="true" />
+              <span>{record.foodType}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Reading Details Grid (pH, VOC, and Sulfur values with clean display) */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4 mb-6">
+          {/* pH Card */}
+          <div className="bg-white/90 rounded-2xl p-4 sm:p-5 border border-brand-border shadow-subtle hover:border-brand-primary/50 transition-colors">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-xs font-semibold text-brand-muted">Kadar Keasaman (pH)</span>
+              <Activity className="w-4 h-4 text-brand-dark" aria-hidden="true" />
+            </div>
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-2xl sm:text-3xl font-extrabold text-brand-text">
+                {record.ph !== null ? record.ph.toFixed(1) : "—"}
+              </span>
+            </div>
+            <p className="text-[11px] text-brand-muted mt-1.5">
+              {record.ph !== null
+                ? record.ph < 6
+                  ? "Karakteristik asam"
+                  : record.ph > 7.5
+                  ? "Karakteristik basa"
+                  : "Rentang netral"
+                : "Nilai tidak valid"}
+            </p>
+          </div>
+
+          {/* VOC Card */}
+          <div className="bg-white/90 rounded-2xl p-4 sm:p-5 border border-brand-border shadow-subtle hover:border-brand-primary/50 transition-colors">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-xs font-semibold text-brand-muted">Gas Volatil (VOC)</span>
+              <Gauge className="w-4 h-4 text-brand-dark" aria-hidden="true" />
+            </div>
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-2xl sm:text-3xl font-extrabold text-brand-text">
+                {record.voc !== null ? record.voc : "—"}
+              </span>
+            </div>
+            <p className="text-[11px] text-brand-muted mt-1.5">
+              {record.voc !== null ? "Sensor MS1100" : "Nilai tidak valid"}
+            </p>
+          </div>
+
+          {/* Sulfur Card (NEW) */}
+          <div className="bg-white/90 rounded-2xl p-4 sm:p-5 border border-brand-border shadow-subtle hover:border-amber-400/50 transition-colors">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-xs font-semibold text-brand-muted">Gas Sulfur (H₂S)</span>
+              <Flame className="w-4 h-4 text-amber-600" aria-hidden="true" />
+            </div>
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-2xl sm:text-3xl font-extrabold text-brand-text">
+                {record.sulfur !== null ? record.sulfur : "—"}
+              </span>
+            </div>
+            <p className="text-[11px] text-brand-muted mt-1.5">
+              {record.sulfur !== null ? "Indikator pembusukan" : "Nilai tidak valid"}
+            </p>
+          </div>
+
+          {/* ID Record Technical Box */}
+          <div className="bg-white/90 rounded-2xl p-4 sm:p-5 border border-brand-border shadow-subtle">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-xs font-semibold text-brand-muted">ID Perangkat/Key</span>
+              <Info className="w-4 h-4 text-brand-dark" aria-hidden="true" />
+            </div>
+            <div className="font-mono text-sm sm:text-base font-bold text-brand-text truncate">
+              {record.id}
+            </div>
+            <p className="text-[11px] text-brand-muted mt-1.5 truncate">
+              Format: {record.isTimestampValid ? "ddMMyyyyHHmm valid" : "Non-standar"}
+            </p>
+          </div>
+        </div>
+
+        {/* Footer of Card: Quick Link to Full Record Details and Report View */}
+        <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-brand-border/60 text-xs">
+          <span className="text-brand-muted">
+            Perubahan pada Firebase akan otomatis memperbarui tampilan ini.
           </span>
           <div className="flex items-center gap-3">
-            <span
-              className={`inline-flex items-center px-4 py-2 rounded-2xl text-xl sm:text-2xl font-black border ${labelBadgeClass} shadow-xs`}
+            <button
+              type="button"
+              onClick={() => setShowReportModal(true)}
+              className="inline-flex items-center gap-1 font-bold text-brand-dark hover:underline"
             >
-              {record.label}
-            </span>
-            <span className="text-xs text-brand-muted max-w-[200px] leading-tight hidden lg:inline">
-              Klasifikasi model AI Random Forest via ESP32-S3
-            </span>
+              <FileText className="w-3.5 h-3.5" aria-hidden="true" />
+              <span>Lihat Laporan Dokumen</span>
+            </button>
+            <span className="text-brand-border">|</span>
+            <Link
+              href={`/riwayat/${record.id}`}
+              className="inline-flex items-center gap-1 font-bold text-brand-dark hover:underline p-1 -m-1 focus:outline-none focus:ring-2 focus:ring-brand-primary/50 rounded"
+            >
+              <span>Detail Record</span>
+              <ChevronRight className="w-4 h-4" aria-hidden="true" />
+            </Link>
           </div>
         </div>
+      </section>
 
-        <div className="sm:text-right">
-          <span className="text-xs font-semibold uppercase tracking-wider text-brand-muted block mb-1">
-            Tipe Makanan
-          </span>
-          <div className="inline-flex items-center gap-2 text-base sm:text-lg font-bold text-brand-text bg-white px-4 py-2 rounded-2xl border border-brand-border shadow-xs">
-            <Utensils className="w-4 h-4 text-brand-dark" aria-hidden="true" />
-            <span>{record.foodType}</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Reading Details Grid (pH and VOC values with clean display) */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3.5 sm:gap-4 mb-6">
-        {/* pH Card */}
-        <div className="bg-white/90 rounded-2xl p-4 sm:p-5 border border-brand-border shadow-subtle hover:border-brand-primary/50 transition-colors">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-semibold text-brand-muted">Kadar Keasaman (pH)</span>
-            <Activity className="w-4 h-4 text-brand-dark" aria-hidden="true" />
-          </div>
-          <div className="flex items-baseline gap-1.5">
-            <span className="text-2xl sm:text-3xl font-extrabold text-brand-text">
-              {record.ph !== null ? record.ph.toFixed(1) : "—"}
-            </span>
-          </div>
-          <p className="text-[11px] text-brand-muted mt-1.5">
-            {record.ph !== null
-              ? record.ph < 6
-                ? "Karakteristik asam"
-                : record.ph > 7.5
-                ? "Karakteristik basa"
-                : "Rentang netral"
-              : "Nilai tidak valid"}
-          </p>
-        </div>
-
-        {/* VOC Card */}
-        <div className="bg-white/90 rounded-2xl p-4 sm:p-5 border border-brand-border shadow-subtle hover:border-brand-primary/50 transition-colors">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-semibold text-brand-muted">Senyawa Volatil (VOC)</span>
-            <Gauge className="w-4 h-4 text-brand-dark" aria-hidden="true" />
-          </div>
-          <div className="flex items-baseline gap-1.5">
-            <span className="text-2xl sm:text-3xl font-extrabold text-brand-text">
-              {record.voc !== null ? record.voc : "—"}
-            </span>
-          </div>
-          <p className="text-[11px] text-brand-muted mt-1.5">
-            {record.voc !== null ? "Nilai mentah sensor gas" : "Nilai tidak valid"}
-          </p>
-        </div>
-
-        {/* ID Record Technical Box */}
-        <div className="col-span-2 sm:col-span-1 bg-white/90 rounded-2xl p-4 sm:p-5 border border-brand-border shadow-subtle">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-semibold text-brand-muted">ID Perangkat/Key</span>
-            <Info className="w-4 h-4 text-brand-dark" aria-hidden="true" />
-          </div>
-          <div className="font-mono text-sm sm:text-base font-bold text-brand-text truncate">
-            {record.id}
-          </div>
-          <p className="text-[11px] text-brand-muted mt-1.5 truncate">
-            Format: {record.isTimestampValid ? "ddMMyyyyHHmm valid" : "Non-standar"}
-          </p>
-        </div>
-      </div>
-
-      {/* Footer of Card: Quick Link to Full Record Details */}
-      <div className="flex items-center justify-between pt-4 border-t border-brand-border/60 text-xs">
-        <span className="text-brand-muted">
-          Perubahan pada Firebase akan otomatis memperbarui tampilan ini.
-        </span>
-        <Link
-          href={`/riwayat/${record.id}`}
-          className="inline-flex items-center gap-1 font-bold text-brand-dark hover:underline p-1 -m-1 focus:outline-none focus:ring-2 focus:ring-brand-primary/50 rounded"
-        >
-          <span>Detail Record</span>
-          <ChevronRight className="w-4 h-4" aria-hidden="true" />
-        </Link>
-      </div>
-    </section>
+      {/* Laporan Modal Preview & Download */}
+      <ReportModal
+        record={record}
+        isOpen={showReportModal}
+        onClose={() => setShowReportModal(false)}
+      />
+    </>
   );
 };

@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { DetectionRecord } from "@/types/detection";
-import { Calendar, Utensils, Activity, Gauge, ChevronRight, Hash } from "lucide-react";
+import { Calendar, Utensils, Activity, Gauge, Flame, ChevronRight, Hash } from "lucide-react";
 
 interface DetectionCardProps {
   record: DetectionRecord;
@@ -63,7 +63,7 @@ export const DetectionCard: React.FC<DetectionCardProps> = ({ record, onSelect }
       </div>
 
       {/* Sensor Measurements Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 py-3 border-y border-brand-border/60 text-xs">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 py-3 border-y border-brand-border/60 text-xs">
         {/* pH */}
         <div className="flex items-center gap-2 bg-brand-bg/50 px-3 py-2 rounded-xl">
           <Activity className="w-4 h-4 text-brand-dark shrink-0" aria-hidden="true" />
@@ -86,8 +86,19 @@ export const DetectionCard: React.FC<DetectionCardProps> = ({ record, onSelect }
           </div>
         </div>
 
-        {/* Mobile Key Display */}
-        <div className="col-span-2 sm:col-span-1 flex items-center justify-between sm:justify-end gap-2 px-3 py-2 sm:p-0">
+        {/* Sulfur (NEW) */}
+        <div className="flex items-center gap-2 bg-brand-bg/50 px-3 py-2 rounded-xl">
+          <Flame className="w-4 h-4 text-amber-600 shrink-0" aria-hidden="true" />
+          <div>
+            <span className="text-[11px] text-brand-muted block">Sulfur</span>
+            <span className="font-extrabold text-sm text-brand-text">
+              {record.sulfur !== null ? record.sulfur : "—"}
+            </span>
+          </div>
+        </div>
+
+        {/* Action / Detail Link */}
+        <div className="flex items-center justify-between sm:justify-end gap-2 px-3 py-2 sm:p-0">
           <div className="sm:hidden font-mono text-[11px] text-brand-muted flex items-center gap-1">
             <Hash className="w-3 h-3" aria-hidden="true" />
             <span>{record.id}</span>

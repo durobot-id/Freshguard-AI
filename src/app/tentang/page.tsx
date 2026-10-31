@@ -61,19 +61,17 @@ export default function TentangPage() {
               <span>Klasifikasi Cerdas AI</span>
             </div>
             <p className="text-xs text-brand-muted leading-relaxed">
-              Memproses data pH dan gas VOC melalui model Random Forest untuk menentukan apakah makanan
-              masih segar atau sudah basi.
+              Memproses data pH, gas VOC, dan gas Sulfur melalui model Random Forest untuk menentukan tingkat basi dan kesegaran makanan secara presisi.
             </p>
           </div>
 
           <div className="p-4 rounded-2xl bg-brand-bg border border-brand-border space-y-1.5">
             <div className="flex items-center gap-2 text-brand-dark font-bold text-xs">
               <Sparkles className="w-4 h-4" aria-hidden="true" />
-              <span>Pemantauan Real-Time</span>
+              <span>Pemantauan &amp; Laporan PDF</span>
             </div>
             <p className="text-xs text-brand-muted leading-relaxed">
-              Menampilkan hasil deteksi secara otomatis ke antarmuka web responsif begitu ESP32-S3
-              mengunggah data uji terbaru.
+              Menampilkan hasil deteksi otomatis ke antarmuka web secara real-time serta menyediakan fitur unduh Laporan Pengujian berformat PDF resmi.
             </p>
           </div>
         </div>
@@ -94,23 +92,27 @@ export default function TentangPage() {
         </div>
         <p className="text-xs sm:text-sm text-brand-muted leading-relaxed">
           Alat FRESHGUARD AI menggunakan mikrokontroler canggih <strong>ESP32-S3</strong> yang terhubung
-          dengan probe sensor pH dan sensor gas VOC (Volatile Organic Compounds):
+          dengan probe sensor pH, sensor gas VOC (Volatile Organic Compounds MS1100), dan sensor gas Sulfur (H₂S):
         </p>
         <ol className="space-y-3 text-xs sm:text-sm text-brand-muted list-decimal list-inside leading-relaxed">
           <li>
-            <strong className="text-brand-text">Pengambilan Data Sensor:</strong> Sensor membaca derajat
-            keasaman (pH) dan konsentrasi senyawa volatil (VOC) dari uap makanan.
+            <strong className="text-brand-text">Pengambilan Data Tiga Sensor Fisik:</strong> Sensor membaca derajat
+            keasaman (pH), konsentrasi senyawa volatil (VOC), dan emisi gas Sulfur (H₂S) dari uap makanan secara simultan.
           </li>
           <li>
-            <strong className="text-brand-text">Pemrosesan Model AI (Random Forest):</strong> Nilai pH
-            dan VOC diinput ke dalam algoritma Machine Learning <strong>Random Forest</strong> yang telah
-            dilatih untuk mengklasifikasikan kondisi makanan apakah dalam kondisi <strong>Segar</strong> atau{" "}
+            <strong className="text-brand-text">Deteksi Biomarker Pembusukan (Sulfur &amp; VOC):</strong> Gas sulfur
+            merupakan indikator paling kuat dari dekomposisi asam amino dan protein oleh bakteri pembusuk yang menyebabkan bau basi khas.
+          </li>
+          <li>
+            <strong className="text-brand-text">Pemrosesan Model AI (Random Forest):</strong> Nilai pH, VOC, dan Sulfur
+            diinput ke dalam algoritma Machine Learning <strong>Random Forest</strong> yang telah
+            dilatih untuk mengklasifikasikan kondisi makanan apakah berstatus <strong>Segar</strong> atau{" "}
             <strong>Basi</strong>.
           </li>
           <li>
             <strong className="text-brand-text">Pengiriman Otomatis oleh ESP32-S3:</strong> Mikrokontroler
             ESP32-S3 mengirimkan hasil klasifikasi, nilai sensor, tipe makanan, dan waktu pembacaan ke
-            Firebase Realtime Database melalui koneksi internet.
+            Firebase Realtime Database melalui koneksi Wi-Fi.
           </li>
         </ol>
       </section>
