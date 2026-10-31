@@ -363,9 +363,9 @@ export const EDUCATION_ARTICLES: EducationArticle[] = [
       },
       {
         title: "Sensor Gas Sulfur (H2S)",
-        desc: "Modul sensor gas sulfur pendeteksi gas hidrogen sulfida dan senyawa belerang volatil hasil perombakan asam amino bersulfur oleh mikroorganisme pembusuk makanan.",
-        imageUrl: "/images/sensor-sulfur.svg",
-        alt: "Modul Sensor Gas Sulfur H2S Pembusukan Makanan",
+        desc: "Foto asli modul sensor gas sulfur pendeteksi gas hidrogen sulfida dan senyawa belerang volatil hasil perombakan asam amino bersulfur oleh mikroorganisme pembusuk makanan.",
+        imageUrl: "/images/sensor-sulfur.png",
+        alt: "Foto Modul Sensor Gas Sulfur H2S Pembusukan Makanan",
         badge: "Sensor Gas Sulfur",
       },
       {
